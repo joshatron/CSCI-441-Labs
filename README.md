@@ -68,7 +68,7 @@ to push to this one, but you will be able to pull new assignments by running the
     git pull csc441 master
 
 Bitbucket also has shortcuts for syncing forked repositories. On the right hand side on your Bitbucket repository,
-there will likely be a box indicating your fork is out of sync when I add new labs.
+there will likely be a box indicating your fork is out of sync when I add new labs. You can click the 'Sync now' link to automatically pull in the new assignments. 
 
 ## Install Qt
 
