@@ -1,10 +1,10 @@
 # Labs
 
-This repository is where all your lab assignments and code will be provided. You will fork this repository into your own private BitBucket repository, where you will make your additions to the code base. The reason for bit bucket is public repositories are free on GitHub, whereas private ones are free on BitBucket. I will be adding assignments to this repository throughout the semester so you will need to follow the instructions below in order to keep your repository up-to-date, while also being able to push changes up to your own personal repository.
+This repository is where all your lab assignments and code will be provided. You will fork this repository into your own private Bitbucket repository, where you will make your additions to the code base. The reason for Bitbucket is public repositories are free on GitHub, whereas private ones are free on Bitbucket. I will be adding assignments to this repository throughout the semester so you will need to follow the instructions below in order to keep your repository up-to-date, while also being able to push changes up to your own personal repository.
 
-## Sign up for BitBucket
+## Sign up for Bitbucket
 
-First, you'll need a BitBucket account, so [sign up here](https://bitbucket.org/account/signup/). 
+First, you'll need a Bitbucket account, so [sign up here](https://bitbucket.org/account/signup/). 
 
 ## Fork the repository
 
@@ -17,7 +17,7 @@ Since you're encouraged to work in teams for the labs, you'll probably want to s
 ## Install Git
 
 Now we need to make sure git is installed. There are a number
-of git GUI clients, including bitbucket's [SourceTree](https://www.atlassian.com/software/sourcetree/overview),
+of git GUI clients, including Bitbucket's [SourceTree](https://www.atlassian.com/software/sourcetree/overview),
 or [others](http://git-scm.com/downloads/guis).
 I'll leave you to figure out your GUI of choice on your own if you like. 
 I always stick to the command line when I can, so that's what I'll be showing
@@ -34,13 +34,13 @@ or go through the basics with [Try Git](try.github.com).
 
 To download your repository so it's ready for modifications, we need to clone it.
 Once git is installed, run the following command with <repo url> replaced with
-the url to your repository (shown in the upper right of the Overview page on bit bucket).
+the url to your repository (shown in the upper right of the Overview page on Bitbucket).
 It'll look something like https://jallwine@bitbucket.org/jallwine/csci-441-labs.git.
 
     git clone <repo url>
 
-It'll ask for your bit bucket password. You'll have to enter your password every time you
-want to push changes up to bit bucket or pull changes down, unless you set up SSH keys (go to
+It'll ask for your Bitbucket password. You'll have to enter your password every time you
+want to push changes up to Bitbucket or pull changes down, unless you set up SSH keys (go to
 Manage Account in the top right most menu, then under security is SSH keys).
 
 ## How to pull the latest assignments
@@ -55,7 +55,7 @@ Then let's list what remotes we currently have:
 
     git remote -v
 
-You should see two entries for your BitBucket repository, one (fetch) and one (push). When
+You should see two entries for your Bitbucket repository, one (fetch) and one (push). When
 you use `git push` or `git pull`, by default you'll push or pull to/from that url. We want to
 add another entry that we can explicitly pull from to merge in assignments as I add them. To
 do that, run the following:
