@@ -67,6 +67,9 @@ to push to this one, but you will be able to pull new assignments by running the
 
     git pull csc441 master
 
+Bitbucket also has shortcuts for syncing forked repositories. On the right hand side on your Bitbucket repository,
+there will likely be a box indicating your fork is out of sync when I add new labs.
+
 ## Install Qt
 
 All assignments and labs will be written in C++ using OpenGL and Qt. Qt is a cross platform
