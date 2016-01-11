@@ -121,7 +121,7 @@ If you've cloned your repository in more than one location (such as on a lab com
 
 ## Submitting your work
 
-For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to submit a pull request prior to the start of class on the day of the deadline. After committing your changes, and pushing them up to the server, you can submit a pull request by clicking 'Create pull request' in the left hand menu. Fill in a descriptive title and description (including which lab number and the names of your partners is a good place to start). Then click 'Create pull request'.
+For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to submit a pull request prior to the start of class on the day of the deadline. After committing your changes, and pushing them up to the server, you can submit a pull request by clicking 'Create pull request' in the left hand menu of your Bitbucket repository. Fill in a descriptive title and description (including which lab number and the names of your partners is a good place to start). Then click 'Create pull request'.
 
 ## More Git Basics
 
