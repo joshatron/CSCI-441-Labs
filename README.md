@@ -12,7 +12,7 @@ You'll need to fork this repository into your own private repository. In the lef
 
 ## Share the repository
 
-Since you're encouraged to work in teams for the labs, you'll probably want to share the repository with your teammates. You can also share the repository with me to make it easier for me to help you if the need arrises. In the upper right, there is usually an 'Invite users to this repo' box with a 'Send invitation' button. Click the button to add users (my username is jallwine). If the 'Invite users to this repo' box isn't there, you can also add users through the 'Settings' menu on the left hand side. Click 'Settings', then 'Account management', where you can add users.
+Since you're encouraged to work in teams for the labs, you'll probably want to share the repository with your teammates. You also must share your repository with me so that I can grade your work. In the upper right, there is usually an 'Invite users to this repo' box with a 'Send invitation' button. Click the button to add users (my username is jallwine). If the 'Invite users to this repo' box isn't there, you can also add users through the 'Settings' menu on the left hand side. Click 'Settings', then 'Account management', where you can add users.
 
 ## Install Git
 
@@ -124,7 +124,9 @@ If you've cloned your repository in more than one location (such as on a lab com
 
 ## Submitting your work
 
-For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to submit a pull request prior to the start of class on the day of the deadline. After committing your changes, and pushing them up to the server, you can submit a pull request by clicking 'Create pull request' in the left hand menu of your Bitbucket repository. Fill in a descriptive title and description (including which lab number and the names of your partners is a good place to start). Then click 'Create pull request'.
+For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to just send me an email with your team members' names and a link to your repository with all your changes committed and push prior to class on the day of the deadline. 
+
+** Note: Normally with git, forks are used to make changes to a repository that you don't own. After implementing a feature, usually a pull request is issued from your fork to the original repository. The maintainers of the original repository can choose to incorporate your changes or not. Unfortunately, pull requests on public repositories (like this one), are public as well. So if you were to turn in your work using pull requests, anyone could view it, so we're NOT using pull requests. **
 
 ## More Git Basics
 
