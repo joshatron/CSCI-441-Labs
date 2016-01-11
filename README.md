@@ -124,7 +124,7 @@ If you've cloned your repository in more than one location (such as on a lab com
 
 ## Submitting your work
 
-For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to just send me an email with your team members' names and a link to your repository with all your changes committed and push prior to class on the day of the deadline. 
+For the labs, you may be able to just demo your work to me in class or in office hours before the deadline, but this may be difficult as there are many students that need to get checked off. An alternative would be to just send me an email with your team members' names, the assignment you're turning in and a link to your repository with all your changes committed and pushed prior to class on the day of the deadline. 
 
 ** Note: Normally with git, forks are used to make changes to a repository that you don't own. After implementing a feature, usually a pull request is issued from your fork to the original repository. The maintainers of the original repository can choose to incorporate your changes or not. Unfortunately, pull requests on public repositories (like this one), are public as well. So if you were to turn in your work using pull requests, anyone could view it, so we're NOT using pull requests. **
 
