@@ -1,5 +1,8 @@
 # Labs
 
+Joshua Leger
+Fred Kneeland
+
 This repository is where all your lab assignments and code will be provided. You will fork this repository into your own private Bitbucket repository, where you will make your additions to the code base. The reason for Bitbucket is public repositories are free on GitHub, whereas private ones are free on Bitbucket. I will be adding assignments to this repository throughout the semester so you will need to follow the instructions below in order to keep your repository up-to-date, while also being able to push changes up to your own personal repository.
 
 ## Sign up for Bitbucket
