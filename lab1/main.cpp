@@ -107,6 +107,16 @@ int main(int argc, char** argv) {
     int maxY = max(max(y1, y2), y3);
     int det = getDeterminentOfMatrix(getMatrixT(x1, x2, x3, y1, y2, y3));
 
+    double r1 = values[0][2];
+    double r2 = values[1][2];
+    double r3 = values[2][2];
+    double g1 = values[0][3];
+    double g2 = values[1][3];
+    double g3 = values[2][3];
+    double b1 = values[0][4];
+    double b2 = values[1][4];
+    double b3 = values[2][4];
+
     for (int i = 0; i < 640; i++)
     {
         if (i < minX || i > maxX) continue;
@@ -119,9 +129,13 @@ int main(int argc, char** argv) {
                 double lambda2 = getLambdaTwo(i, j, x1, x2, x3, y1, y2, y3, det);
                 double lambda3 = getLambdaThree(lambda1, lambda2);
 
+                double colorR = (r1 * lambda1 + r2 * lambda2 + r3 * lambda3) * 255;
+                double colorG = (g1 * lambda1 + g2 * lambda2 + g3 * lambda3) * 255;
+                double colorB = (b1 * lambda1 + b2 * lambda2 + b3 * lambda3) * 255;
+
                 if (lambda1 > 0 && lambda2 > 0 && lambda3 > 0)
                 {
-                    image.setPixel(i,j, qRgb(255,255,255));
+                    image.setPixel(i,j, qRgb(colorR,colorG,colorB));
                 }
             }
         }
