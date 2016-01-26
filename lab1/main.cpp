@@ -5,27 +5,14 @@
 using namespace std;
 
 /**
- * This method creates the matrix T for a triangle
+ * This method determines the determinante of Martrix T
  */
-int** getMatrixT(int x1, int x2, int x3, int y1, int y2, int y3)
+int getDeterminent(int x1, int x2, int x3, int y1, int y2, int y3)
 {
-    int array[2][2];
-
-    array[0][0] = x1 - x3;
-    array[0][1] = x2 - x3;
-    array[1][0] = y1 - y3;
-    array[1][1] = y2 - y3;
-}
-
-/**
- * This function gets the determinant of a matrix
- */
-int getDeterminentOfMatrix(int** matrix)
-{
-    int a = matrix[0][0];
-    int b = matrix[0][1];
-    int c = matrix[1][0];
-    int d = matrix[1][1];
+    int a = x1 - x3;
+    int b = x2 - x3;
+    int c = y1 - y3;
+    int d = y2 - y3;
 
     return a*d - b*c;
 }
@@ -71,6 +58,8 @@ int main(int argc, char** argv) {
     // with a standard 32 bit red, green, blue format
     QImage image(640, 480, QImage::Format_RGB32);
 
+    cout << "starting" << endl;
+
     int x1 = 22;
     int x2 = 22;
     int x3 = 125;
@@ -81,7 +70,9 @@ int main(int argc, char** argv) {
     int maxX = 125;
     int minY = 33;
     int maxY = 236;
-    int det = getDeterminentOfMatrix(getMatrixT(x1, x2, x3, y1, y2, y3));
+    cout << "before det" << endl;
+    int det = getDeterminent(x1, x2, x3, y1, y2, y3);
+    cout << "after det" << endl;
 
     for (int i = 0; i < 640; i++)
     {
@@ -97,6 +88,7 @@ int main(int argc, char** argv) {
 
                 if (lambda1 > 0 && lambda2 > 0 && lambda3 > 0)
                 {
+                    cout << "setting a pixel" << endl;
                     image.setPixel(i,j, qRgb(255,255,255));
                 }
             }
