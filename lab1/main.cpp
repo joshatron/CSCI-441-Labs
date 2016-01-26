@@ -5,6 +5,56 @@
 
 using namespace std;
 
+/**
+ * This method creates the matrix T for a triangle
+ */
+int** getMatrixT(int x1, int x2, int x3, int y1, int y2, int y3)
+{
+    int array[2][2];
+
+    array[0][0] = x1 - x3;
+    array[0][1] = x2 - x3;
+    array[1][0] = y1 - y3;
+    array[1][1] = y2 - y3;
+}
+
+/**
+ * This function gets the determinant of a matrix
+ */
+int getDeterminentOfMatrix(int** matrix)
+{
+    int a = matrix[0][0];
+    int b = matrix[0][1];
+    int c = matrix[1][0];
+    int d = matrix[1][1];
+
+    return a*d - b*c;
+}
+
+/**
+ * This method calculates lambda 1
+ */
+double getLambdaOne(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, int det)
+{
+    return ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / det;
+}
+
+/**
+ * This method calculates lambda 2
+ */
+double getLambdaTwo(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, int det)
+{
+    return ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / det;
+}
+
+/**
+ * This method calculates lambda 3
+ */
+double getLambdaThree(double lambda1, double lambda2)
+{
+    return 1 - lambda1 - lambda2;
+}
+
 int main(int argc, char** argv) {
     cout << "Enter 3 points in form x,y:r,g,b:" << endl;
     string inputs[3];
@@ -43,7 +93,39 @@ int main(int argc, char** argv) {
 
     // create an image 640 pixels wide by 480 pixels tall
     // with a standard 32 bit red, green, blue format
-    QImage image(640, 480, QImage::Format_RGB32); 
+    QImage image(640, 480, QImage::Format_RGB32);
+
+    int x1 = 22;
+    int x2 = 22;
+    int x3 = 125;
+    int y1 = 33;
+    int y2 = 236;
+    int y3 = 236;
+    int minX = 22;
+    int maxX = 125;
+    int minY = 33;
+    int maxY = 236;
+    int det = getDeterminentOfMatrix(getMatrixT(x1, x2, x3, y1, y2, y3));
+
+    for (int i = 0; i < 640; i++)
+    {
+        if (i < minX || i > maxX) continue;
+
+        for (int j = 0; j < 480; j++)
+        {
+            if (j >= minY && j <= maxY)
+            {
+                double lambda1 = getLambdaOne(i, j, x1, x2, x3, y1, y2, y3, det);
+                double lambda2 = getLambdaTwo(i, j, x1, x2, x3, y1, y2, y3, det);
+                double lambda3 = getLambdaThree(lambda1, lambda2);
+
+                if (lambda1 > 0 && lambda2 > 0 && lambda3 > 0)
+                {
+                    image.setPixel(i,j, qRgb(255,255,255));
+                }
+            }
+        }
+    }
 
     /* 
       Part 1:
