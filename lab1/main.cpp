@@ -8,7 +8,7 @@ using namespace std;
 /**
  * This method determines the determinante of Martrix T
  */
-int getDeterminent(int x1, int x2, int x3, int y1, int y2, int y3)
+double getDeterminent(int x1, int x2, int x3, int y1, int y2, int y3)
 {
     int a = x1 - x3;
     int b = x2 - x3;
@@ -21,7 +21,7 @@ int getDeterminent(int x1, int x2, int x3, int y1, int y2, int y3)
 /**
  * This method calculates lambda 1
  */
-double getLambdaOne(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, int det)
+double getLambdaOne(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, double det)
 {
     return ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / det;
 }
@@ -29,7 +29,7 @@ double getLambdaOne(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3
 /**
  * This method calculates lambda 2
  */
-double getLambdaTwo(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, int det)
+double getLambdaTwo(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, double det)
 {
     return ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / det;
 }
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     int maxX = max(max(x1, x2), x3);
     int minY = min(min(y1, y2), y3);
     int maxY = max(max(y1, y2), y3);
-    int det = getDeterminent(x1, x2, x3, y1, y2, y3);
+    double det = getDeterminent(x1, x2, x3, y1, y2, y3);
 
     double r1 = values[0][2];
     double r2 = values[1][2];
@@ -120,7 +120,7 @@ int main(int argc, char** argv) {
                 double colorG = (g1 * lambda1 + g2 * lambda2 + g3 * lambda3) * 255;
                 double colorB = (b1 * lambda1 + b2 * lambda2 + b3 * lambda3) * 255;
 
-                if (lambda1 >= 0 && lambda2 >= 0 && lambda3 >= 0)
+                if (lambda1 > 0 && lambda2 > 0 && lambda3 > 0)
                 {
                     image.setPixel(i,j, qRgb(colorR,colorG,colorB));
                 }
