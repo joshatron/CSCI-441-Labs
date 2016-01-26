@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
                 double lambda2 = getLambdaTwo(i, j, x1, x2, x3, y1, y2, y3, det);
                 double lambda3 = getLambdaThree(lambda1, lambda2);
 
-                if (lambda1 > 0 && lambda2 > 0 && lambda3 > 0)
+                if (lambda1 >= 0 && lambda2 >= 0 && lambda3 >= 0)
                 {
                     cout << "setting a pixel" << endl;
                     image.setPixel(i,j, qRgb(255,255,255));
