@@ -95,16 +95,16 @@ int main(int argc, char** argv) {
     // with a standard 32 bit red, green, blue format
     QImage image(640, 480, QImage::Format_RGB32);
 
-    int x1 = 22;
-    int x2 = 22;
-    int x3 = 125;
-    int y1 = 33;
-    int y2 = 236;
-    int y3 = 236;
-    int minX = 22;
-    int maxX = 125;
-    int minY = 33;
-    int maxY = 236;
+    int x1 = values[0][0];
+    int x2 = values[1][0];
+    int x3 = values[2][0];
+    int y1 = values[0][1];
+    int y2 = values[1][1];
+    int y3 = values[2][1];
+    int minX = min(min(x1, x2), x3);
+    int maxX = max(max(x1, x2), x3);
+    int minY = min(min(y1, y2), y3);
+    int maxY = max(max(y1, y2), y3);
     int det = getDeterminentOfMatrix(getMatrixT(x1, x2, x3, y1, y2, y3));
 
     for (int i = 0; i < 640; i++)
