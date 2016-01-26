@@ -1,6 +1,7 @@
 #include <QImage>
 #include <QColor>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
@@ -42,6 +43,29 @@ double getLambdaThree(double lambda1, double lambda2)
 }
 
 int main(int argc, char** argv) {
+    cout << "Enter 3 points in form x,y:r,g,b:" << endl;
+    string inputs[3];
+    cin >> inputs[0];
+    cin >> inputs[1];
+    cin >> inputs[2];
+
+    double values[3][5];
+
+    for(int k = 0; k < 3; k++)
+    {
+        vector<string> strs, points, colors;
+        boost::split(strs, inputs[k], boost::is_any_of(":"));
+        boost::split(points, strs[0], boost::is_any_of(","));
+        boost::split(colors, strs[1], boost::is_any_of(","));
+        values[k][0] = ::atof(points[0].c_str());
+        values[k][1] = ::atof(points[1].c_str());
+        values[k][2] = ::atof(colors[0].c_str());
+        values[k][3] = ::atof(colors[1].c_str());
+        values[k][4] = ::atof(colors[2].c_str());
+
+        cout << "(" << values[k][0] << ", " << values[k][1] << "), R:" << values[k][2] << ", G:" << values[k][3] << ", B:" << values[k][4] << endl;
+    }
+
     /* 
       Prompt user for 3 points separated by whitespace.
 
@@ -58,21 +82,27 @@ int main(int argc, char** argv) {
     // with a standard 32 bit red, green, blue format
     QImage image(640, 480, QImage::Format_RGB32);
 
-    cout << "starting" << endl;
-
-    int x1 = 22;
-    int x2 = 22;
-    int x3 = 125;
-    int y1 = 33;
-    int y2 = 236;
-    int y3 = 236;
-    int minX = 22;
-    int maxX = 125;
-    int minY = 33;
-    int maxY = 236;
-    cout << "before det" << endl;
+    int x1 = values[0][0];
+    int x2 = values[1][0];
+    int x3 = values[2][0];
+    int y1 = values[0][1];
+    int y2 = values[1][1];
+    int y3 = values[2][1];
+    int minX = min(min(x1, x2), x3);
+    int maxX = max(max(x1, x2), x3);
+    int minY = min(min(y1, y2), y3);
+    int maxY = max(max(y1, y2), y3);
     int det = getDeterminent(x1, x2, x3, y1, y2, y3);
-    cout << "after det" << endl;
+
+    double r1 = values[0][2];
+    double r2 = values[1][2];
+    double r3 = values[2][2];
+    double g1 = values[0][3];
+    double g2 = values[1][3];
+    double g3 = values[2][3];
+    double b1 = values[0][4];
+    double b2 = values[1][4];
+    double b3 = values[2][4];
 
     for (int i = 0; i < 640; i++)
     {
@@ -86,10 +116,13 @@ int main(int argc, char** argv) {
                 double lambda2 = getLambdaTwo(i, j, x1, x2, x3, y1, y2, y3, det);
                 double lambda3 = getLambdaThree(lambda1, lambda2);
 
+                double colorR = (r1 * lambda1 + r2 * lambda2 + r3 * lambda3) * 255;
+                double colorG = (g1 * lambda1 + g2 * lambda2 + g3 * lambda3) * 255;
+                double colorB = (b1 * lambda1 + b2 * lambda2 + b3 * lambda3) * 255;
+
                 if (lambda1 >= 0 && lambda2 >= 0 && lambda3 >= 0)
                 {
-                    cout << "setting a pixel" << endl;
-                    image.setPixel(i,j, qRgb(255,255,255));
+                    image.setPixel(i,j, qRgb(colorR,colorG,colorB));
                 }
             }
         }
