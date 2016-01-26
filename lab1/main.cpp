@@ -19,7 +19,25 @@ int main(int argc, char** argv) {
 
     // create an image 640 pixels wide by 480 pixels tall
     // with a standard 32 bit red, green, blue format
-    QImage image(640, 480, QImage::Format_RGB32); 
+    QImage image(640, 480, QImage::Format_RGB32);
+
+    int minX = 22;
+    int maxX = 125;
+    int minY = 33;
+    int maxY = 236;
+
+    for (int i = 0; i < 640; i++)
+    {
+        if (i < minX || i > maxX) continue;
+
+        for (int j = 0; j < 480; j++)
+        {
+            if (j >= minY && j <= maxY)
+            {
+                image.setPixel(i,j, qRgb(255,255,255));
+            }
+        }
+    }
 
     /* 
       Part 1:
