@@ -30,8 +30,11 @@ Compute barycentric coordinates for each pixel in the bounding box. Instead of t
 ## Part 3 - Color
 
 Modify your code that retrieves input to include color values that range from 0 - 1 for a red, green and blue component for each point. Modify your loop to use the barycentric coordinates as weights and compute a color for the current pixel.
-Things To Notice
-Everything about each pixel (whether it’s on or off, it’s color, location, etc.) is calculated independently of every other pixel. All of this information could be calculated in any order and in parallel. The ability to highly parallelize graphics computations is what makes graphics hardware so powerful. 
+
+## Things To Notice
+
+Everything about each pixel (whether it’s on or off, it’s color, location, etc.) is calculated independently of every other pixel. 
+All of this information could be calculated in any order and in parallel. The ability to highly parallelize graphics computations is what makes graphics hardware so powerful. 
 
 ## Recommended Reading
 
