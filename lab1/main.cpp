@@ -4,6 +4,56 @@
 
 using namespace std;
 
+/**
+ * This method creates the matrix T for a triangle
+ */
+int** getMatrixT(int x1, int x2, int x3, int y1, int y2, int y3)
+{
+    int array[2][2];
+
+    array[0][0] = x1 - x3;
+    array[0][1] = x2 - x3;
+    array[1][0] = y1 - y3;
+    array[1][1] = y2 - y3;
+}
+
+/**
+ * This function gets the determinant of a matrix
+ */
+int getDeterminentOfMatrix(int** matrix)
+{
+    int a = matrix[0][0];
+    int b = matrix[0][1];
+    int c = matrix[1][0];
+    int d = matrix[1][1];
+
+    return a*d - b*c;
+}
+
+/**
+ * This method calculates lambda 1
+ */
+double getLambdaOne(int x, int y, int x1, int x2, int x3, int y1, int y2, int y3, int det)
+{
+    return ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / det;
+}
+
+/**
+ * This method calculates lambda 2
+ */
+double getLambdaTwo(int x1, int x2, int x3, int y1, int y2, int y3, int det)
+{
+    return ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / det;
+}
+
+/**
+ * This method calculates lambda 3
+ */
+double getLambdaThree(double lambda1, double lambda2)
+{
+    return 1 - lambda1 - lambda2;
+}
+
 int main(int argc, char** argv) {
     /* 
       Prompt user for 3 points separated by whitespace.
