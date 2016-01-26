@@ -1,10 +1,34 @@
 #include <QImage>
 #include <QColor>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
 int main(int argc, char** argv) {
+    cout << "Enter 3 points in form x,y:r,g,b:" << endl;
+    string inputs[3];
+    cin >> inputs[0];
+    cin >> inputs[1];
+    cin >> inputs[2];
+
+    double values[3][5];
+
+    for(int k = 0; k < 3; k++)
+    {
+        vector<string> strs, points, colors;
+        boost::split(strs, inputs[k], boost::is_any_of(":"));
+        boost::split(points, strs[0], boost::is_any_of(","));
+        boost::split(colors, strs[1], boost::is_any_of(","));
+        values[k][0] = ::atof(points[0].c_str());
+        values[k][1] = ::atof(points[1].c_str());
+        values[k][2] = ::atof(colors[0].c_str());
+        values[k][3] = ::atof(colors[1].c_str());
+        values[k][4] = ::atof(colors[2].c_str());
+
+        cout << "(" << values[k][0] << ", " << values[k][1] << "), R:" << values[k][2] << ", G:" << values[k][3] << ", B:" << values[k][4] << endl;
+    }
+
     /* 
       Prompt user for 3 points separated by whitespace.
 
