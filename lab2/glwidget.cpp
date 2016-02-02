@@ -60,6 +60,10 @@ void GLWidget::initializeGL() {
     Point p3(x, y);
     Color c3(r, g, b);
 
+    p1 = w2nd(p1);
+    p2 = w2nd(p2);
+    p3 = w2nd(p3);
+
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -113,6 +117,8 @@ Point GLWidget::w2nd(Point pt_w) {
     /* convert pt_w to normalized device coordinates */
     /* use this method to convert your input coordinates to
        normalized device coordinates */
+    pt_w.x = -1 + pt_w.x * (2. / 640.);
+    pt_w.y = 1 - pt_w.y * (2. / 480.);
     return pt_w;
 }
 
