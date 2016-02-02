@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
+#include "global.h"
 
 using namespace std;
 
@@ -140,8 +141,9 @@ Point GLWidget::w2nd(Point pt_w) {
     /* convert pt_w to normalized device coordinates */
     /* use this method to convert your input coordinates to
        normalized device coordinates */
-    pt_w.x = -1 + pt_w.x * (2. / 640.);
-    pt_w.y = 1 - pt_w.y * (2. / 480.);
+
+    pt_w.x = -1 + pt_w.x * (2. / window_width);
+    pt_w.y = 1 - pt_w.y * (2. / window_height);
     return pt_w;
 }
 
