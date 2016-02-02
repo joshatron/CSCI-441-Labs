@@ -74,9 +74,9 @@ void GLWidget::initializeGL() {
 
     // position data for a single triangle
     Point pts[3] = {
-        Point(0,1),
-        Point(1,0),
-        Point(0,-1)
+        p1,
+        p2,
+        p3
     };
 
     // Create a buffer on the GPU for position data
