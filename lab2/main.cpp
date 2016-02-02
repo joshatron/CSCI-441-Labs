@@ -3,8 +3,13 @@
 
 #include "glwidget.h"
 #include <iostream>
+#include "global.h"
 
 using namespace std;
+
+// set global variables from global.h
+double window_width = 640.;
+double window_height = 480.;
 
 struct Info : QOpenGLFunctions_3_3_Core {
     void printOpenGLInfo();
@@ -43,7 +48,8 @@ int main(int argc, char** argv) {
     QSurfaceFormat::setDefaultFormat(format);
 
     GLWidget glWidget;
-    glWidget.resize(640,480);
+    glWidget.resize(window_width, window_height);
+
     glWidget.show();
 
     Info f;
