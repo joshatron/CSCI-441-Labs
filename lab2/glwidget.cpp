@@ -2,7 +2,6 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
-#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
@@ -15,49 +14,52 @@ GLWidget::~GLWidget() {
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     
-    cout << "Enter 3 points in form x,y:r,g,b:" << endl;
-    string inputs[3];
-    cin >> inputs[0];
-    cin >> inputs[1];
-    cin >> inputs[2];
+    double x, y, r, g, b;
+    //point 1
+    cout << "Point 1 x: ";
+    cin >> x;
+    cout << "Point 1 y: ";
+    cin >> y;
+    cout << "Point 1 red: ";
+    cin >> r;
+    cout << "Point 1 green: ";
+    cin >> g;
+    cout << "Point 1 blue: ";
+    cin >> b;
 
-    double values[3][5];
+    Point p1(x, y);
+    Color c1(r, g, b);
 
-    for(int k = 0; k < 3; k++)
-    {
-        cout << inputs[k] << endl;
-        vector<string> strs, points, colors;
-        boost::split(strs, inputs[k], boost::is_any_of(":"));
-        boost::split(points, strs[0], boost::is_any_of(","));
-        boost::split(colors, strs[1], boost::is_any_of(","));
-        values[k][0] = ::atof(points[0].c_str());
-        values[k][1] = ::atof(points[1].c_str());
-        values[k][2] = ::atof(colors[0].c_str());
-        values[k][3] = ::atof(colors[1].c_str());
-        values[k][4] = ::atof(colors[2].c_str());
+    //point 2
+    cout << "Point 2 x: ";
+    cin >> x;
+    cout << "Point 2 y: ";
+    cin >> y;
+    cout << "Point 2 red: ";
+    cin >> r;
+    cout << "Point 2 green: ";
+    cin >> g;
+    cout << "Point 2 blue: ";
+    cin >> b;
 
-        cout << "(" << values[k][0] << ", " << values[k][1] << "), R:" << values[k][2] << ", G:" << values[k][3] << ", B:" << values[k][4] << endl;
-    }
+    Point p2(x, y);
+    Color c2(r, g, b);
 
-    double x1 = w2nd(values[0][0], width, 1);
-    double x2 = w2nd(values[1][0], width, 1);
-    double x3 = w2nd(values[2][0], width, 1);
-    double y1 = w2nd(values[0][1], height, 0);
-    double y2 = w2nd(values[1][1], height, 0);
-    double y3 = w2nd(values[2][1], height, 0);
-    cout << "(" << x1 << ", " << y1 << ")" << endl;
-    cout << "(" << x2 << ", " << y2 << ")" << endl;
-    cout << "(" << x3 << ", " << y3 << ")" << endl;
+    //point 3
+    cout << "Point 3 x: ";
+    cin >> x;
+    cout << "Point 3 y: ";
+    cin >> y;
+    cout << "Point 3 red: ";
+    cin >> r;
+    cout << "Point 3 green: ";
+    cin >> g;
+    cout << "Point 3 blue: ";
+    cin >> b;
 
-    double r1 = values[0][2];
-    double r2 = values[1][2];
-    double r3 = values[2][2];
-    double g1 = values[0][3];
-    double g2 = values[1][3];
-    double g3 = values[2][3];
-    double b1 = values[0][4];
-    double b2 = values[1][4];
-    double b3 = values[2][4];
+    Point p3(x, y);
+    Color c3(r, g, b);
+
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

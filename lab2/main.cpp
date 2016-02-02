@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     QSurfaceFormat::setDefaultFormat(format);
 
     GLWidget glWidget;
-    glWidget.resize(width,height);
+    glWidget.resize(640,480);
     glWidget.show();
 
     Info f;
