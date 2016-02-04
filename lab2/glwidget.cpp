@@ -15,58 +15,28 @@ GLWidget::~GLWidget() {
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     
-    double x, y, r, g, b;
-    //point 1
-    cout << "Point 1 x: ";
-    cin >> x;
-    cout << "Point 1 y: ";
-    cin >> y;
-    cout << "Point 1 red: ";
-    cin >> r;
-    cout << "Point 1 green: ";
-    cin >> g;
-    cout << "Point 1 blue: ";
-    cin >> b;
+    double x[3], y[3], r[3], g[3], b[3];
+    for(int k = 0; k < 3; k++)
+    {
+        cout << "Point " << (k + 1) << endl;
+        cout << "x: ";
+        cin >> x[k];
+        cout << "y: ";
+        cin >> y[k];
+        cout << "red: ";
+        cin >> r[k];
+        cout << "green: ";
+        cin >> g[k];
+        cout << "blue: ";
+        cin >> b[k];
+    }
 
-    Point p1(x, y);
-    Color c1(r, g, b);
-
-    //point 2
-    cout << "Point 2 x: ";
-    cin >> x;
-    cout << "Point 2 y: ";
-    cin >> y;
-    cout << "Point 2 red: ";
-    cin >> r;
-    cout << "Point 2 green: ";
-    cin >> g;
-    cout << "Point 2 blue: ";
-    cin >> b;
-
-    Point p2(x, y);
-    Color c2(r, g, b);
-
-    //point 3
-    cout << "Point 3 x: ";
-    cin >> x;
-    cout << "Point 3 y: ";
-    cin >> y;
-    cout << "Point 3 red: ";
-    cin >> r;
-    cout << "Point 3 green: ";
-    cin >> g;
-    cout << "Point 3 blue: ";
-    cin >> b;
-
-    Point p3(x, y);
-    Color c3(r, g, b);
-
-    /*Point p1(10,10);
-    Point p2(450,450);
-    Point p3(10,450);
-    Color c1(1.,0.,0.);
-    Color c2(0.,1.,0.);
-    Color c3(0.,0.,1.);*/
+    Point p1(x[0], y[0]);
+    Color c1(r[0], g[0], b[0]);
+    Point p2(x[1], y[1]);
+    Color c2(r[1], g[1], b[1]);
+    Point p3(x[2], y[2]);
+    Color c3(r[2], g[2], b[2]);
 
     p1 = w2nd(p1);
     p2 = w2nd(p2);
