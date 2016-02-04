@@ -15,7 +15,7 @@ GLWidget::~GLWidget() {
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     
-    /*double x, y, r, g, b;
+    double x, y, r, g, b;
     //point 1
     cout << "Point 1 x: ";
     cin >> x;
@@ -59,14 +59,14 @@ void GLWidget::initializeGL() {
     cin >> b;
 
     Point p3(x, y);
-    Color c3(r, g, b);*/
+    Color c3(r, g, b);
 
-    Point p1(10,10);
+    /*Point p1(10,10);
     Point p2(450,450);
     Point p3(10,450);
     Color c1(1.,0.,0.);
     Color c2(0.,1.,0.);
-    Color c3(0.,0.,1.);
+    Color c3(0.,0.,1.);*/
 
     p1 = w2nd(p1);
     p2 = w2nd(p2);
