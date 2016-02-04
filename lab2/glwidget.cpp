@@ -15,7 +15,7 @@ GLWidget::~GLWidget() {
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     
-    double x, y, r, g, b;
+    /*double x, y, r, g, b;
     //point 1
     cout << "Point 1 x: ";
     cin >> x;
@@ -59,7 +59,14 @@ void GLWidget::initializeGL() {
     cin >> b;
 
     Point p3(x, y);
-    Color c3(r, g, b);
+    Color c3(r, g, b);*/
+
+    Point p1(10,10);
+    Point p2(450,450);
+    Point p3(10,450);
+    Color c1(1.,0.,0.);
+    Color c2(0.,1.,0.);
+    Color c3(0.,0.,1.);
 
     p1 = w2nd(p1);
     p2 = w2nd(p2);
@@ -89,6 +96,17 @@ void GLWidget::initializeGL() {
     glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(pts), pts, GL_STATIC_DRAW);
 
+    Color clrs[3] = {
+        c1,
+        c2,
+        c3
+    };
+
+    GLuint colorBuffer;
+    glGenBuffers(1, &colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(clrs), clrs, GL_STATIC_DRAW);
+
     // Load our vertex and fragment shaders into a program object
     // on the GPU
     program = loadShaders(":/vert.glsl", ":/frag.glsl");
@@ -101,6 +119,11 @@ void GLWidget::initializeGL() {
     GLint positionIndex = glGetAttribLocation(program, "position");
     glEnableVertexAttribArray(positionIndex);
     glVertexAttribPointer(positionIndex, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    GLint colorIndex = glGetAttribLocation(program, "color_in");
+    glEnableVertexAttribArray(colorIndex);
+    glVertexAttribPointer(colorIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 void GLWidget::resizeGL(int w, int h) {
