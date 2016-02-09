@@ -60,6 +60,10 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
                     drawMode = GL_TRIANGLES;
                     cout << "Switched to GL_TRIANGLES." << endl;
                     break;
+                case GL_TRIANGLES:
+                    drawMode = GL_TRIANGLE_STRIP;
+                    cout << "Switched to GL_TRIANGLE_STRIP." << endl;
+                    break;
                 case GL_TRIANGLE_STRIP:
                     drawMode = GL_TRIANGLE_FAN;
                     cout << "Switched to GL_TRIANGLE_FAN." << endl;
@@ -114,8 +118,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
         num_pts++;
 
-
-        
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * pts2.size(), pts2.data(), GL_DYNAMIC_DRAW);
         update();
