@@ -39,7 +39,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         bool outline;
         GLenum drawMode;
 
-        vector<vec2> pts2();
+        std::vector<vec2> pts2;
         vec2 pts[3];
         int num_pts;
 };

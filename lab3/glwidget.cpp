@@ -78,15 +78,21 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-    if(num_pts >= pts.size()) {
-        cout << "increasing size by 3" << endl;
-        pts.resize(pts.size() + 3);
-    }
+//    if(num_pts >= pts2.size()) {
+//        cout << "increasing size by 3" << endl;
+//        pts2.resize(pts2.size() + 3);
+//    }
 
 
 
-    pts2[num_pts].x = event->x();
-    pts2[num_pts].y = event->y();
+    vec2 newPoint;
+    newPoint.x = event->x();
+    newPoint.y = event->y();
+
+    pts2.push_back(newPoint);
+
+//    pts2[num_pts].x = event->x();
+//    pts2[num_pts].y = event->y();
 
 //        pts[num_pts].x = event->x();
 //        pts[num_pts].y = event->y();
@@ -99,7 +105,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(pts2), pts2, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(pts), &pts[0], GL_DYNAMIC_DRAW);
         update();
 
 
