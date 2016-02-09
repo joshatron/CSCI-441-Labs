@@ -38,9 +38,6 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
             }
             break;
         case Qt::Key_Space:
-            cout << "Change this to cycle through "
-                    "different draw modes and print "
-                    "out which one we're currently on." << endl;
 
             switch (drawMode)
             {
