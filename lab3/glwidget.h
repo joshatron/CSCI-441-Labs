@@ -40,6 +40,10 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLenum drawMode;
 
         std::vector<vec2> pts2;
+        GLuint projectionBuffer;
+        GLint projectionLoc;
+
+        glm::mat4 projection;
         vec2 pts[3];
         int num_pts;
 };

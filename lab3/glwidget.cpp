@@ -98,11 +98,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 //        pts[num_pts].y = event->y();
 
         cout << "Added point (" << pts2[num_pts].x << ", " << pts2[num_pts].y << ") " << endl;
-        cout << "Make sure your orthographic projection matrix "
-                "is set up so you can see the points." << endl;
 
         num_pts++;
-
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(pts), &pts[0], GL_DYNAMIC_DRAW);
@@ -147,6 +144,8 @@ void GLWidget::initializeGL() {
     GLint positionIndex = glGetAttribLocation(program, "position");
     glEnableVertexAttribArray(positionIndex);
     glVertexAttribPointer(positionIndex, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glUseProgram(program);
+    projectionLoc = glGetUniformLocation(program, "projection");
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -160,6 +159,10 @@ void GLWidget::resizeGL(int w, int h) {
     // This way we won't need to do any conversions on our mouse 
     // event coordinates and when we resize the window the geometry 
     // won't be scaled unevenly.
+
+    projection = glm::ortho(0.f, (float)w, (float)h, 0.f);
+
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projection[0][0]);
 }
 
 void GLWidget::paintGL() {
