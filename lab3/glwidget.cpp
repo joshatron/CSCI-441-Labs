@@ -44,7 +44,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 
             switch (drawMode)
             {
-                case GL_Points:
+                case GL_POINTS:
                     drawMode = GL_LINES;
                     break;
                 case GL_LINES:
