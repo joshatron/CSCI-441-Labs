@@ -41,6 +41,26 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
             cout << "Change this to cycle through "
                     "different draw modes and print "
                     "out which one we're currently on." << endl;
+
+            switch (drawMode)
+            {a
+                case GL_Points:
+                    drawMode = GL_LINES;
+                    break;
+                case GL_LINES:
+                    drawMode = GL_LINE_STRIP;
+                    break;
+                case GL_LINE_LOOP:
+                    drawMode = GL_TRIANGLES;
+                    break;
+                case GL_TRIANGLE_STRIP:
+                    drawMode = GL_TRIANGLE_FAN;
+                    break;
+                case GL_TRIANGLE_FAN:
+                    drawMode = GL_POINTS;
+                    break;
+            }
+
             /*
               Cycle between the following draw modes:
                 GL_POINTS,
