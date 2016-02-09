@@ -78,11 +78,20 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-    if(num_pts < 3) {
-        pts[num_pts].x = event->x();
-        pts[num_pts].y = event->y();
+    if(num_pts >= pts.size()) {
+        cout << "increasing size by 3" << endl;
+        pts.resize(pts.size() + 3);
+    }
 
-        cout << "Added point (" << pts[num_pts].x << ", " << pts[num_pts].y << ") " << endl;
+
+
+    pts2[num_pts].x = event->x();
+    pts2[num_pts].y = event->y();
+
+//        pts[num_pts].x = event->x();
+//        pts[num_pts].y = event->y();
+
+        cout << "Added point (" << pts2[num_pts].x << ", " << pts2[num_pts].y << ") " << endl;
         cout << "Make sure your orthographic projection matrix "
                 "is set up so you can see the points." << endl;
 
@@ -90,13 +99,15 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(pts), pts, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(pts2), pts2, GL_DYNAMIC_DRAW);
         update();
-    } else {
-        cout << "Three points is the max. "
-                "You must change this to make "
-                "it so any number of points can be created." << endl;
-    }
+
+
+//    } else {
+//        cout << "Three points is the max. "
+//                "You must change this to make "
+//                "it so any number of points can be created." << endl;
+//    }
 }
 
 void GLWidget::initializeGL() {
