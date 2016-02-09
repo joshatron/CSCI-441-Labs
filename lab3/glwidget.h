@@ -44,6 +44,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         glm::mat4 projection;
 
+        vector<vec2> pts2();
         vec2 pts[3];
         int num_pts;
 };

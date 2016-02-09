@@ -41,6 +41,26 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
             cout << "Change this to cycle through "
                     "different draw modes and print "
                     "out which one we're currently on." << endl;
+
+            switch (drawMode)
+            {
+                case GL_POINTS:
+                    drawMode = GL_LINES;
+                    break;
+                case GL_LINES:
+                    drawMode = GL_LINE_STRIP;
+                    break;
+                case GL_LINE_LOOP:
+                    drawMode = GL_TRIANGLES;
+                    break;
+                case GL_TRIANGLE_STRIP:
+                    drawMode = GL_TRIANGLE_FAN;
+                    break;
+                case GL_TRIANGLE_FAN:
+                    drawMode = GL_POINTS;
+                    break;
+            }
+
             /*
               Cycle between the following draw modes:
                 GL_POINTS,
@@ -58,11 +78,20 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-    if(num_pts < 3) {
-        pts[num_pts].x = event->x();
-        pts[num_pts].y = event->y();
+    if(num_pts >= pts.size()) {
+        cout << "increasing size by 3" << endl;
+        pts.resize(pts.size() + 3);
+    }
 
-        cout << "Added point (" << pts[num_pts].x << ", " << pts[num_pts].y << ") " << endl;
+
+
+    pts2[num_pts].x = event->x();
+    pts2[num_pts].y = event->y();
+
+//        pts[num_pts].x = event->x();
+//        pts[num_pts].y = event->y();
+
+        cout << "Added point (" << pts2[num_pts].x << ", " << pts2[num_pts].y << ") " << endl;
         cout << "Make sure your orthographic projection matrix "
                 "is set up so you can see the points." << endl;
 
@@ -72,13 +101,15 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(pts), pts, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(pts2), pts2, GL_DYNAMIC_DRAW);
         update();
-    } else {
-        cout << "Three points is the max. "
-                "You must change this to make "
-                "it so any number of points can be created." << endl;
-    }
+
+
+//    } else {
+//        cout << "Three points is the max. "
+//                "You must change this to make "
+//                "it so any number of points can be created." << endl;
+//    }
 }
 
 void GLWidget::initializeGL() {
