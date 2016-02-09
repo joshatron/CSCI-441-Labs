@@ -101,8 +101,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
         num_pts++;
 
+
+        
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(pts2.data()), pts2.data(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * pts2.size(), pts2.data(), GL_DYNAMIC_DRAW);
         update();
 
 
