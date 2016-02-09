@@ -92,13 +92,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 //        pts[num_pts].y = event->y();
 
         cout << "Added point (" << pts2[num_pts].x << ", " << pts2[num_pts].y << ") " << endl;
-        cout << "Make sure your orthographic projection matrix "
-                "is set up so you can see the points." << endl;
 
-        glm::vec4 loc = projection * glm::vec4(pts[num_pts].x, pts[num_pts].y, 0, 1);
-        cout << loc.x << ", " << loc.y << endl;
         num_pts++;
-
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(pts2), pts2, GL_DYNAMIC_DRAW);
