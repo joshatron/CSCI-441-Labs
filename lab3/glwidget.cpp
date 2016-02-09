@@ -43,7 +43,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
                     "out which one we're currently on." << endl;
 
             switch (drawMode)
-            {a
+            {
                 case GL_Points:
                     drawMode = GL_LINES;
                     break;
