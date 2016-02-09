@@ -66,6 +66,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         cout << "Make sure your orthographic projection matrix "
                 "is set up so you can see the points." << endl;
 
+        glm::vec4 loc = projection * glm::vec4(pts[num_pts].x, pts[num_pts].y, 0, 1);
+        cout << loc.x << ", " << loc.y << endl;
         num_pts++;
 
 
@@ -110,6 +112,8 @@ void GLWidget::initializeGL() {
     GLint positionIndex = glGetAttribLocation(program, "position");
     glEnableVertexAttribArray(positionIndex);
     glVertexAttribPointer(positionIndex, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glUseProgram(program);
+    projectionLoc = glGetUniformLocation(program, "projection");
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -123,6 +127,10 @@ void GLWidget::resizeGL(int w, int h) {
     // This way we won't need to do any conversions on our mouse 
     // event coordinates and when we resize the window the geometry 
     // won't be scaled unevenly.
+
+    projection = glm::ortho(0.f, (float)w, (float)h, 0.f);
+
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projection[0][0]);
 }
 
 void GLWidget::paintGL() {

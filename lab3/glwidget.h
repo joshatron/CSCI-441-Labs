@@ -39,6 +39,11 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         bool outline;
         GLenum drawMode;
 
+        GLuint projectionBuffer;
+        GLint projectionLoc;
+
+        glm::mat4 projection;
+
         vec2 pts[3];
         int num_pts;
 };
