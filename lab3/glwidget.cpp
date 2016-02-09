@@ -46,18 +46,31 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
             {
                 case GL_POINTS:
                     drawMode = GL_LINES;
+                    cout << "Switched to GL_LINES." << endl;
                     break;
                 case GL_LINES:
                     drawMode = GL_LINE_STRIP;
+                    cout << "Switched to GL_LINE_STRIP." << endl;
+                    break;
+                case GL_LINE_STRIP:
+                    drawMode = GL_LINE_LOOP;
+                    cout << "Switched to GL_LINE_LOOP." << endl;
                     break;
                 case GL_LINE_LOOP:
                     drawMode = GL_TRIANGLES;
+                    cout << "Switched to GL_TRIANGLES." << endl;
                     break;
                 case GL_TRIANGLE_STRIP:
                     drawMode = GL_TRIANGLE_FAN;
+                    cout << "Switched to GL_TRIANGLE_FAN." << endl;
                     break;
                 case GL_TRIANGLE_FAN:
                     drawMode = GL_POINTS;
+                    cout << "Switched to GL_POINTS." << endl;
+                    break;
+                default:
+                    drawMode = GL_POINTS;
+                    cout << "default." << endl;
                     break;
             }
 
