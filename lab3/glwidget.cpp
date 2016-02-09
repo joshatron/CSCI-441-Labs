@@ -24,6 +24,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
                     "update this once you modify how the points "
                     "are stored." << endl;
             num_pts = 0;
+            pts2.clear();
             glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
             glBufferData(GL_ARRAY_BUFFER, 0, NULL, GL_DYNAMIC_DRAW);
             break;
@@ -116,7 +117,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         num_pts++;
 
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * pts2.size(), pts2.data(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * num_pts, pts2.data(), GL_DYNAMIC_DRAW);
         update();
 
 
