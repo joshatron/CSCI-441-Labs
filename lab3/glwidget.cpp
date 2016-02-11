@@ -116,6 +116,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 
         num_pts++;
 
+        glUseProgram(program);
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * num_pts, pts2.data(), GL_DYNAMIC_DRAW);
         update();
@@ -177,6 +178,7 @@ void GLWidget::resizeGL(int w, int h) {
 
     projection = glm::ortho(0.f, (float)w, (float)h, 0.f);
 
+    glUseProgram(program);
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projection[0][0]);
 }
 
