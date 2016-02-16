@@ -1,5 +1,6 @@
 #include "glwidget.h"
 #include <iostream>
+#include "math.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -232,6 +233,7 @@ void GLWidget::initializeGL() {
 
     initializeCube();
     initializeGrid();
+    updateModelMatrix();
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -404,6 +406,20 @@ void GLWidget::updateModelMatrix() {
     // rotation and scale values and upload it as a uniform variable to
     // the cube program (don't use it to change the grid). Update your
     // vertex shader accordingly.
+    glm::mat4 scaleMatrix = glm::mat4(sx, 0, 0, 0,
+                                      0, sy, 0, 0,
+                                      0, 0, sz, 0,
+                                      0, 0, 0, 1);
+
+    glm::mat4 translateMatrix = glm::mat4(1, 0, 0, tx,
+                                          0, 1, 0, ty,
+                                          0, 0, 1, tz,
+                                          0, 0, 0, 1);
+
+    modelMatrix = translateMatrix;
+    glUseProgram(cubeProg);
+    glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, value_ptr(modelMatrix));
+    update();
 }
 
 void GLWidget::updateViewMatrix() {
