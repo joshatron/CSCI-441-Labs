@@ -10,6 +10,7 @@
 #endif
 
 using glm::vec3;
+using glm::vec4;
 using glm::value_ptr;
 using glm::ortho;
 
@@ -78,6 +79,10 @@ void GLWidget::initializeCube() {
     // saves the attribute layout of our vertices.
     glGenVertexArrays(1, &cubeVao);
     glBindVertexArray(cubeVao);
+
+    camAngle = 0;
+    camY = 0;
+    updateViewMatrix();
 
     // Create a buffer on the GPU for position data
     GLuint positionBuffer;
@@ -261,6 +266,7 @@ void GLWidget::renderCube() {
     glUseProgram(cubeProg);
     glBindVertexArray(cubeVao);
     glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
+    std::cout << "render Cube" << std::endl;
 }
 
 void GLWidget::renderGrid() {
@@ -412,4 +418,21 @@ void GLWidget::updateViewMatrix() {
 
     // C++ : compute the matrix
     // glm::mat4 MVPmatrix = projection * view * model; // Remember : inverted !
+
+
+    // Calculate projection matrix
+    projection = glm::mat4(1.0f); //glm::perspective(camAngle, 1);
+
+    // Calculate view matrix
+    view = glm::lookAt(
+            glm::vec3(0, camY, 0), // Camera
+            glm::vec3(0,0,0),      // look At
+            glm::vec3(0,1,0)       // Head Loc
+    );
+
+    // Calculate model matrix
+    model = glm::mat4(1.0f);
+
+    // calculate MVP matrix
+    MVPmatrix = projection * view * model;
 }
