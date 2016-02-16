@@ -93,47 +93,29 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-//    if(num_pts >= pts2.size()) {
-//        cout << "increasing size by 3" << endl;
-//        pts2.resize(pts2.size() + 3);
-//    }
-
-
-
     vec2 newPoint;
     newPoint.x = event->x();
     newPoint.y = event->y();
 
     pts2.push_back(newPoint);
+    num_pts++;
 
-//    pts2[num_pts].x = event->x();
-//    pts2[num_pts].y = event->y();
+    for (int i = 0; i < num_pts; i++)
+    {
+        cout << "Point: " << i << " is (" << pts2[i].x << ", " << pts2[i].y << ")" << endl;
+    }
 
-//        pts[num_pts].x = event->x();
-//        pts[num_pts].y = event->y();
-
-        cout << "Added point (" << pts2[num_pts].x << ", " << pts2[num_pts].y << ") " << endl;
-
-        num_pts++;
-
-        glUseProgram(program);
-        glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * num_pts, pts2.data(), GL_DYNAMIC_DRAW);
-        update();
-
-
-//    } else {
-//        cout << "Three points is the max. "
-//                "You must change this to make "
-//                "it so any number of points can be created." << endl;
-//    }
+    glUseProgram(program);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * num_pts, pts2.data(), GL_DYNAMIC_DRAW);
+    update();
 }
 
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glPointSize(4.0f);
+    glPointSize(16.0f);
 
     // Create a new Vertex Array Object on the GPU which
     // saves the attribute layout of our vertices.
@@ -185,6 +167,8 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glUseProgram(program);
+    glBindVertexArray(vao);
     // draw primitives based on the current draw mode
     glDrawArrays(drawMode, 0, num_pts);
     
