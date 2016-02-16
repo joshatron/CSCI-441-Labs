@@ -411,12 +411,26 @@ void GLWidget::updateModelMatrix() {
                                       0, 0, sz, 0,
                                       0, 0, 0, 1);
 
-    glm::mat4 translateMatrix = glm::mat4(1, 0, 0, tx,
-                                          0, 1, 0, ty,
-                                          0, 0, 1, tz,
-                                          0, 0, 0, 1);
+    glm::mat4 translateMatrix = glm::mat4(1, 0, 0, 0,
+                                          0, 1, 0, 0,
+                                          0, 0, 1, 0,
+                                          tx, ty, tz, 1);
 
-    modelMatrix = translateMatrix;
+    glm::mat4 rotateXMatrix = glm::mat4(1, 0, 0, 0,
+                                        0, cos(rx), sin(rx), 0,
+                                        0, -1 * sin(rx), cos(rx), 0,
+                                        0, 0, 0, 1);
+
+    glm::mat4 rotateYMatrix = glm::mat4(cos(ry), 0, -1 * sin(ry), 0,
+                                        0, 1, 0, 0,
+                                        sin(ry), 0, cos(ry), 0,
+                                        0, 0, 0, 1);
+
+    glm::mat4 rotateZMatrix = glm::mat4(cos(rz), sin(rz), 0, 0,
+                                        -1 * sin(rz), cos(rz), 0, 0,
+                                        0, 0, 1, 0,
+                                        0, 0, 0, 1);
+    modelMatrix = translateMatrix * scaleMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix;
     glUseProgram(cubeProg);
     glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, value_ptr(modelMatrix));
     update();
@@ -425,7 +439,4 @@ void GLWidget::updateModelMatrix() {
 void GLWidget::updateViewMatrix() {
     // Part 2 - Construct a view matrix and upload as a uniform variable
     // to the cube and grid programs. Update your vertex shader accordingly.
-
-    // C++ : compute the matrix
-    // glm::mat4 MVPmatrix = projection * view * model; // Remember : inverted !
 }
