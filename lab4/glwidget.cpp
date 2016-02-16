@@ -81,10 +81,6 @@ void GLWidget::initializeCube() {
     glGenVertexArrays(1, &cubeVao);
     glBindVertexArray(cubeVao);
 
-    camAngle = 0;
-    camY = 0;
-    updateViewMatrix();
-
     // Create a buffer on the GPU for position data
     GLuint positionBuffer;
     glGenBuffers(1, &positionBuffer);
@@ -239,6 +235,7 @@ void GLWidget::initializeGL() {
     initializeCube();
     initializeGrid();
     updateModelMatrix();
+    updateViewMatrix();
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -268,7 +265,6 @@ void GLWidget::renderCube() {
     glUseProgram(cubeProg);
     glBindVertexArray(cubeVao);
     glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
-    std::cout << "render Cube" << std::endl;
 }
 
 void GLWidget::renderGrid() {
@@ -417,12 +413,26 @@ void GLWidget::updateModelMatrix() {
                                       0, 0, sz, 0,
                                       0, 0, 0, 1);
 
-    glm::mat4 translateMatrix = glm::mat4(1, 0, 0, tx,
-                                          0, 1, 0, ty,
-                                          0, 0, 1, tz,
-                                          0, 0, 0, 1);
+    glm::mat4 translateMatrix = glm::mat4(1, 0, 0, 0,
+                                          0, 1, 0, 0,
+                                          0, 0, 1, 0,
+                                          tx, ty, tz, 1);
 
-    modelMatrix = translateMatrix;
+    glm::mat4 rotateXMatrix = glm::mat4(1, 0, 0, 0,
+                                        0, cos(rx), sin(rx), 0,
+                                        0, -1 * sin(rx), cos(rx), 0,
+                                        0, 0, 0, 1);
+
+    glm::mat4 rotateYMatrix = glm::mat4(cos(ry), 0, -1 * sin(ry), 0,
+                                        0, 1, 0, 0,
+                                        sin(ry), 0, cos(ry), 0,
+                                        0, 0, 0, 1);
+
+    glm::mat4 rotateZMatrix = glm::mat4(cos(rz), sin(rz), 0, 0,
+                                        -1 * sin(rz), cos(rz), 0, 0,
+                                        0, 0, 1, 0,
+                                        0, 0, 0, 1);
+    modelMatrix = translateMatrix * scaleMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix;
     glUseProgram(cubeProg);
     glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, value_ptr(modelMatrix));
     update();
@@ -430,25 +440,17 @@ void GLWidget::updateModelMatrix() {
 
 void GLWidget::updateViewMatrix() {
     // Part 2 - Construct a view matrix and upload as a uniform variable
-    // to the cube and grid programs. Update your vertex shader accordingly.
-
-    // C++ : compute the matrix
-    // glm::mat4 MVPmatrix = projection * view * model; // Remember : inverted !
-
-
-    // Calculate projection matrix
-    projection = glm::mat4(1.0f); //glm::perspective(camAngle, 1);
+    // to the cube and grid programs. Update your vertex shader accordingly
 
     // Calculate view matrix
     view = glm::lookAt(
-            glm::vec3(0, camY, 0), // Camera
+            glm::vec3(10 * sin(camAngle), camY, 10 * cos(camAngle)), // Camera
             glm::vec3(0,0,0),      // look At
             glm::vec3(0,1,0)       // Head Loc
     );
 
+
     glUseProgram(cubeProg);
     glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, value_ptr(view));
-
-
     update();
 }
