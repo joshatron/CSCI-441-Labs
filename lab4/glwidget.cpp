@@ -215,6 +215,8 @@ void GLWidget::initializeCube() {
     cubeProjMatrixLoc = glGetUniformLocation(program, "projection");
 
     // Part 2 & 3 - Get any uniform variable locations that you'll need.
+    viewMatrixLoc = glGetUniformLocation(program, "view");
+    modelMatrixLoc = glGetUniformLocation(program, "model");
 }
 
 void GLWidget::initializeGL() {
