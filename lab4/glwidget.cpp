@@ -425,4 +425,7 @@ void GLWidget::updateModelMatrix() {
 void GLWidget::updateViewMatrix() {
     // Part 2 - Construct a view matrix and upload as a uniform variable
     // to the cube and grid programs. Update your vertex shader accordingly.
+
+    // C++ : compute the matrix
+    // glm::mat4 MVPmatrix = projection * view * model; // Remember : inverted !
 }
