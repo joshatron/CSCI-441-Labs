@@ -167,6 +167,8 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glUseProgram(program);
+    glBindVertexArray(vao);
     // draw primitives based on the current draw mode
     glDrawArrays(drawMode, 0, num_pts);
     
