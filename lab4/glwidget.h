@@ -78,6 +78,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         mat4 projection;
         mat4 view;
         mat4 model;
+        mat4 modelMatrix;
 };
 
 #endif
