@@ -73,6 +73,7 @@ void GLWidget::initializeGrid() {
     gridProjMatrixLoc = glGetUniformLocation(program, "projection");
 
     // Part 2 - Get any uniform variable locations that you'll need.
+    gridViewMatrixLoc = glGetUniformLocation(program, "view");
 }
 
 void GLWidget::initializeCube() {
@@ -451,6 +452,8 @@ void GLWidget::updateViewMatrix() {
 
 
     glUseProgram(cubeProg);
+    glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, value_ptr(view));
+    glUseProgram(gridProg);
     glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, value_ptr(view));
     update();
 }

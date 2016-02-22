@@ -72,6 +72,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint gridProjMatrixLoc;
         GLint viewMatrixLoc;
         GLint modelMatrixLoc;
+        GLint gridViewMatrixLoc;
 
         mat4 projMatrix;
         mat4 MVPmatrix;
