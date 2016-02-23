@@ -242,11 +242,19 @@ void GLWidget::initializeGL() {
 void GLWidget::resizeGL(int w, int h) {
     glViewport(0,0,w,h);
 
+    float n = 1.;
+    float f = 20.;
+    float theta = 60 * M_PI / 180;
     float aspect = (float)w/h;
 
-    projMatrix = ortho(-5.0f*aspect, 5.0f*aspect, -5.0f, 5.0f, -10.0f, 100.0f);
+    //projMatrix = ortho(-5.0f*aspect, 5.0f*aspect, -5.0f, 5.0f, -10.0f, 100.0f);
     // Part 1 - Instead of using ortho, construct your own perspective matrix.
     // Do not use glm::perspective.
+
+    glm::mat4 projMatrix = glm::mat4((1 / (aspect * tan(theta / 2))), 0, 0, 0,
+                                     0, (1 / tan(theta / 2)), 0, 0,
+                                     0, 0, ((n + f) / (n - f)), -1,
+                                     0, 0, ((2 * f * n) / (n - f)), 0);
 
     glUseProgram(cubeProg);
     glUniformMatrix4fv(cubeProjMatrixLoc, 1, false, value_ptr(projMatrix));
@@ -433,7 +441,7 @@ void GLWidget::updateModelMatrix() {
                                         -1 * sin(rz), cos(rz), 0, 0,
                                         0, 0, 1, 0,
                                         0, 0, 0, 1);
-    modelMatrix = translateMatrix * scaleMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix;
+    modelMatrix = translateMatrix * (rotateXMatrix * rotateYMatrix * rotateZMatrix) * scaleMatrix;
     glUseProgram(cubeProg);
     glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, value_ptr(modelMatrix));
     update();
