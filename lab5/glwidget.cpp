@@ -389,15 +389,19 @@ vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
     // Part 1 - implement the equations for a virtual trackball to
     // convert the provided pt parameter to a 3D point on the virtual
     // trackball surface.
+    float x = pt.x - width / 2;
+    float y = pt.y - height / 2;
     vec3 newPoint(pt.x, pt.y, 0);
-    if(pow(pt.x, 2) + pow(pt.y, 2) > pow(radius, 2) / 2)
+    if(pow(x, 2) + pow(y, 2) > pow(radius, 2) / 2)
     {
-        newPoint.z = (pow(radius, 2) / 2) / sqrt(pow(pt.x, 2) + pow(pt.y, 2));
+        newPoint.z = (pow(radius, 2) / 2) / sqrt(pow(x, 2) + pow(y, 2));
     }
     else
     {
-        newPoint.z = sqrt(pow(radius, 2) - pow(pt.x, 2) - pow(pt.y, 2));
+        newPoint.z = sqrt(pow(radius, 2) - pow(x, 2) - pow(y, 2));
     }
+
+    std::cout << "(" << newPoint.x << ", " << newPoint.y << ", " << newPoint.z << ")" << std::endl;
 
     return newPoint;
 }
