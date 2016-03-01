@@ -38,6 +38,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint cubeProjMatrixLoc;
         GLint cubeViewMatrixLoc;
         GLint cubeModelMatrixLoc;
+        GLint cubeRotationMatrixLoc;
 
         void initializeGrid();
         void renderGrid();
@@ -47,6 +48,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint gridProjMatrixLoc;
         GLint gridViewMatrixLoc;
         GLint gridModelMatrixLoc;
+        GLint gridRotationMatrixLoc;
 
         mat4 projMatrix;
         mat4 viewMatrix;
@@ -55,6 +57,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         int width;
         int height;
+        float radius;
 
         glm::vec2 first;
         glm::vec2 last;

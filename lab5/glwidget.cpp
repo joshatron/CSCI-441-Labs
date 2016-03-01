@@ -4,12 +4,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <QTextStream>
-#include "math.h"
+#include <math.h>
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif
 
+using std::min;
 using glm::vec2;
 using glm::vec3;
 using glm::mat4;
@@ -23,7 +24,7 @@ using glm::value_ptr;
 using glm::lookAt;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
-    rotationMatrix(1.0);
+    rotationMatrix = mat4(1.0);
 }
 
 GLWidget::~GLWidget() {
@@ -68,6 +69,7 @@ void GLWidget::initializeGrid() {
     gridProjMatrixLoc = glGetUniformLocation(program, "projection");
     gridViewMatrixLoc = glGetUniformLocation(program, "view");
     gridModelMatrixLoc = glGetUniformLocation(program, "model");
+    gridRotationMatrixLoc = glGetUniformLocation(program, "rotation");
 }
 
 void GLWidget::initializeCube() {
@@ -212,6 +214,7 @@ void GLWidget::initializeCube() {
     cubeProjMatrixLoc = glGetUniformLocation(program, "projection");
     cubeViewMatrixLoc = glGetUniformLocation(program, "view");
     cubeModelMatrixLoc = glGetUniformLocation(program, "model");
+    cubeRotationMatrixLoc = glGetUniformLocation(program, "rotation");
 }
 
 void GLWidget::initializeGL() {
@@ -233,6 +236,8 @@ void GLWidget::resizeGL(int w, int h) {
     width = w;
     height = h;
 
+    radius = min(width, height) * .75;
+
     float aspect = (float)w/h;
 
     projMatrix = perspective(45.0f, aspect, 1.0f, 100.0f);
@@ -243,11 +248,13 @@ void GLWidget::resizeGL(int w, int h) {
     glUniformMatrix4fv(cubeProjMatrixLoc, 1, false, value_ptr(projMatrix));
     glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
     glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
+    glUniformMatrix4fv(cubeRotationMatrixLoc, 1, false, value_ptr(rotationMatrix));
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridProjMatrixLoc, 1, false, value_ptr(projMatrix));
     glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
     glUniformMatrix4fv(gridModelMatrixLoc, 1, false, value_ptr(modelMatrix));
+    glUniformMatrix4fv(gridRotationMatrixLoc, 1, false, value_ptr(rotationMatrix));
 }
 
 void GLWidget::paintGL() {
@@ -353,16 +360,24 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     vec3 end = pointOnVirtualTrackball(last);
 
     float dotProduct = dot(normalize(begin), normalize(end));
-    double angle = acos(dotProduct);
+    float angle = acos(dotProduct);
     angle *= 180;
     angle /= 3.14;
-    vec3 cross = cross(begin, end);
+    vec3 crossP = cross(begin, end);
 
-    if(length(cross) > .00001f)
+    if(length(crossP) > .00001f)
     {
-        rotationMatrix = rotate(rotationMatrix, angle, normalize(cross));
+        rotationMatrix = rotate(rotationMatrix, angle, normalize(crossP));
+        glUseProgram(cubeProg);
+        glUniformMatrix4fv(cubeRotationMatrixLoc, 1, false, value_ptr(rotationMatrix));
+        glUseProgram(gridProg);
+        glUniformMatrix4fv(gridRotationMatrixLoc, 1, false, value_ptr(rotationMatrix));
         update();
     }
+
+
+    first.x = last.x;
+    first.y = last.y;
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
