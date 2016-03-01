@@ -21,7 +21,8 @@ using glm::rotate;
 using glm::value_ptr;
 using glm::lookAt;
 
-GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) { 
+GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
+    rotationMatrix(1.0);
 }
 
 GLWidget::~GLWidget() {
@@ -346,10 +347,23 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     last.x = event->x();
     last.y = event->y();
+
+    vec3 begin = pointOnVirtualTrackball(first);
+    vec3 end = pointOnVirtualTrackball(last);
+
+    int dotProduct = begin.x * end.x + begin.y * end.y + begin.z * end.z;
+    int magnitude = sqrt(begin.x*begin.x + begin.y*begin.y + begin.z*begin.z) + sqrt(end.x*end.x + end.y*end.y + end.z*end.z);
+    double angle = acos(dotProduct/magnitude);
+    angle *= 180;
+    angle /= 3.14;
+
+    rotationMatrix = rotate(rotationMatrix, angle, vec3(0,0,1));
+    update();
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
-
+    std::cout << "start x: " << first.x << " y: " << first.y << " ends at x: " << last.x << " y: " << last.y << std::endl;
+    std::cout << " release at x: " << event->x() << " y: " << event->y() << std::endl;
 }
 
 vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
