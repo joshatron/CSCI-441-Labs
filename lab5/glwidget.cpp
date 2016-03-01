@@ -352,14 +352,17 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     vec3 begin = pointOnVirtualTrackball(first);
     vec3 end = pointOnVirtualTrackball(last);
 
-    int dotProduct = begin.x * end.x + begin.y * end.y + begin.z * end.z;
-    int magnitude = sqrt(begin.x*begin.x + begin.y*begin.y + begin.z*begin.z) + sqrt(end.x*end.x + end.y*end.y + end.z*end.z);
-    double angle = acos(dotProduct/magnitude);
+    float dotProduct = dot(normalize(begin), normalize(end));
+    double angle = acos(dotProduct);
     angle *= 180;
     angle /= 3.14;
+    vec3 cross = cross(begin, end);
 
-    rotationMatrix = rotate(rotationMatrix, angle, vec3(0,0,1));
-    update();
+    if(length(cross) > .00001f)
+    {
+        rotationMatrix = rotate(rotationMatrix, angle, normalize(cross));
+        update();
+    }
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
