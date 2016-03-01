@@ -362,7 +362,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     float dotProduct = dot(normalize(begin), normalize(end));
     float angle = acos(dotProduct);
     angle *= 180;
-    angle /= 3.14;
+    angle /= M_PI;
     vec3 crossP = cross(begin, end);
 
     if(length(crossP) > .00001f)

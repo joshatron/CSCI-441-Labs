@@ -8,5 +8,5 @@ uniform mat4 rotation;
 in vec3 position;
 
 void main() {
-  gl_Position = projection * rotation * view * model * vec4(position, 1);
+  gl_Position = projection * view * rotation * model * vec4(position, 1);
 }

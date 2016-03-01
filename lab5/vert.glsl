@@ -14,6 +14,6 @@ in vec3 color;
 out vec3 fcolor;
 
 void main() {
-  gl_Position = projection * rotation * view * model * vec4(position, 1);
+  gl_Position = projection * view * rotation *  model * vec4(position, 1);
   fcolor = color;
 }
