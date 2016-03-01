@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <QTextStream>
+#include "math.h"
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -370,4 +371,15 @@ vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
     // Part 1 - implement the equations for a virtual trackball to
     // convert the provided pt parameter to a 3D point on the virtual
     // trackball surface.
+    vec3 newPoint(pt.x, pt.y, 0);
+    if(pow(pt.x, 2) + pow(pt.y, 2) > pow(radius, 2) / 2)
+    {
+        newPoint.z = (pow(radius, 2) / 2) / sqrt(pow(pt.x, 2) + pow(pt.y, 2));
+    }
+    else
+    {
+        newPoint.z = sqrt(pow(radius, 2) - pow(pt.x, 2) - pow(pt.y, 2));
+    }
+
+    return newPoint;
 }
