@@ -19,6 +19,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         ~GLWidget();
 
         GLuint loadShaders(const char* vertf, const char* fragf);
+
     protected:
         void initializeGL();
         void resizeGL(int w, int h);
@@ -26,6 +27,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
+        void mouseReleaseEvent(QMouseEvent *event);
 
     private:
         void initializeCube();
@@ -52,6 +54,9 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         int width;
         int height;
+
+        glm::vec2 first;
+        glm::vec2 last;
 
         glm::vec3 pointOnVirtualTrackball(const glm::vec2 &pt);
 };

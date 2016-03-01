@@ -339,11 +339,17 @@ GLuint GLWidget::loadShaders(const char* vertf, const char* fragf) {
 // multiply the matrices to accumulate a single trackball rotation
 // matrix.
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-    vec2 pt(event->x(), event->y());
+    first.x = event->x();
+    first.y = event->y();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
-    vec2 pt(event->x(), event->y());
+    last.x = event->x();
+    last.y = event->y();
+}
+
+void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
+
 }
 
 vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
