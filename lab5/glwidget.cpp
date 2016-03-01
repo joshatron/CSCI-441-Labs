@@ -391,7 +391,7 @@ vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
     // trackball surface.
     float x = pt.x - width / 2;
     float y = pt.y - height / 2;
-    vec3 newPoint(pt.x, pt.y, 0);
+    vec3 newPoint(x, y, 0);
     if(pow(x, 2) + pow(y, 2) > pow(radius, 2) / 2)
     {
         newPoint.z = (pow(radius, 2) / 2) / sqrt(pow(x, 2) + pow(y, 2));
