@@ -361,13 +361,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
     float dotProduct = dot(normalize(begin), normalize(end));
     float angle = acos(dotProduct);
-    angle *= 180;
-    angle /= M_PI;
     vec3 crossP = cross(begin, end);
 
     if(length(crossP) > .00001f)
     {
-        rotationMatrix = rotate(rotationMatrix, angle, normalize(crossP));
+        rotationMatrix = rotate(mat4(1.0), angle, normalize(crossP)) * rotationMatrix;
         glUseProgram(cubeProg);
         glUniformMatrix4fv(cubeRotationMatrixLoc, 1, false, value_ptr(rotationMatrix));
         glUseProgram(gridProg);
@@ -400,8 +398,6 @@ vec3 GLWidget::pointOnVirtualTrackball(const vec2 &pt) {
     {
         newPoint.z = sqrt(pow(radius, 2) - pow(x, 2) - pow(y, 2));
     }
-
-    std::cout << "(" << newPoint.x << ", " << newPoint.y << ", " << newPoint.z << ")" << std::endl;
 
     return newPoint;
 }
