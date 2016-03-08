@@ -36,6 +36,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint cubeProjMatrixLoc;
         GLint cubeViewMatrixLoc;
         GLint cubeModelMatrixLoc;
+        GLint cubeLightPosLoc;
 
         void initializeGrid();
         void renderGrid();
@@ -55,6 +56,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         glm::vec3 lastVPt;
         glm::vec3 pointOnVirtualTrackball(const glm::vec2 &pt);
+
+        vec3 light;
 };
 
 #endif

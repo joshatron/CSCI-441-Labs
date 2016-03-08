@@ -211,6 +211,7 @@ void GLWidget::initializeCube() {
     cubeProjMatrixLoc = glGetUniformLocation(program, "projection");
     cubeViewMatrixLoc = glGetUniformLocation(program, "view");
     cubeModelMatrixLoc = glGetUniformLocation(program, "model");
+    cubeLightPosLoc = glGetUniformLocation(program, "lightPos");
 }
 
 void GLWidget::initializeGL() {
@@ -223,6 +224,8 @@ void GLWidget::initializeGL() {
     GLuint restart = 0xFFFFFFFF;
     glPrimitiveRestartIndex(restart);
     glEnable(GL_PRIMITIVE_RESTART);
+
+    light = vec3(0, 10, 0);
 
     initializeCube();
     initializeGrid();
@@ -242,6 +245,7 @@ void GLWidget::resizeGL(int w, int h) {
     glUniformMatrix4fv(cubeProjMatrixLoc, 1, false, value_ptr(projMatrix));
     glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
     glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
+    glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(viewMatrix * modelMatrix * light));
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridProjMatrixLoc, 1, false, value_ptr(projMatrix));
@@ -352,6 +356,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
         glUseProgram(cubeProg);
         glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
+        glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(viewMatrix * modelMatrix * light));
 
         glUseProgram(gridProg);
         glUniformMatrix4fv(gridModelMatrixLoc, 1, false, value_ptr(modelMatrix));
