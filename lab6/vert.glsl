@@ -6,7 +6,10 @@ uniform mat4 model;
 
 in vec3 position;
 in vec3 color;
+
 out vec3 fcolor;
+out vec3 fposition;
+out vec3 fnormal;
 
 void main() {
   gl_Position = projection * view * model * vec4(position, 1);
