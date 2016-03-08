@@ -85,6 +85,47 @@ void GLWidget::initializeCube() {
     GLuint indexBuffer;
     glGenBuffers(1, &indexBuffer);
 
+    GLuint normalBuffer;
+    glGenBuffers(1, &normalBuffer);
+
+    vec3 normals[] = {
+        // top phase
+        vec3(0,1,0),
+        vec3(0,1,0),
+        vec3(0,1,0),
+        vec3(0,1,0),
+
+        // bottom
+        vec3(0,-1,0),
+        vec3(0,-1,0),
+        vec3(0,-1,0),
+        vec3(0,-1,0),
+
+        // front
+        vec3(0, 0, 1),
+        vec3(0, 0, 1),
+        vec3(0, 0, 1),
+        vec3(0, 0, 1),
+
+        // back
+        vec3(0, 0, -1),
+        vec3(0, 0, -1),
+        vec3(0, 0, -1),
+        vec3(0, 0, -1),
+
+        // right
+        vec3(1, 0, 0),
+        vec3(1, 0, 0),
+        vec3(1, 0, 0),
+        vec3(1, 0, 0),
+
+        // left
+        vec3(-1, 0, 0),
+        vec3(-1, 0, 0),
+        vec3(-1, 0, 0),
+        vec3(-1, 0, 0),
+    };
+
     vec3 pts[] = {
         // top
         vec3(1,1,1),    // 0
@@ -188,6 +229,9 @@ void GLWidget::initializeCube() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+
     // Load our vertex and fragment shaders into a program object
     // on the GPU
     GLuint program = loadShaders(":/vert.glsl", ":/frag.glsl");
@@ -202,6 +246,12 @@ void GLWidget::initializeCube() {
     GLint positionIndex = glGetAttribLocation(program, "position");
     glEnableVertexAttribArray(positionIndex);
     glVertexAttribPointer(positionIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    // assign normal data
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    GLint normalIndex = glGetAttribLocation(program, "normal");
+    glEnableVertexAttribArray(normalIndex);
+    glVertexAttribPointer(normalIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     GLint colorIndex = glGetAttribLocation(program, "color");
