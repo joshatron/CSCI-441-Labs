@@ -12,6 +12,7 @@
 using glm::inverse;
 using glm::vec2;
 using glm::vec3;
+using glm::vec4;
 using glm::mat4;
 using glm::perspective;
 using glm::normalize;
@@ -295,7 +296,9 @@ void GLWidget::resizeGL(int w, int h) {
     glUniformMatrix4fv(cubeProjMatrixLoc, 1, false, value_ptr(projMatrix));
     glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
     glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
-    glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(viewMatrix * modelMatrix * light));
+
+    vec3 tempLight = vec3(viewMatrix * modelMatrix * vec4(light, 1));
+    glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(tempLight));
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridProjMatrixLoc, 1, false, value_ptr(projMatrix));
@@ -406,7 +409,9 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
         glUseProgram(cubeProg);
         glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
-        glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(viewMatrix * modelMatrix * light));
+
+        vec3 tempLight = vec3(viewMatrix * modelMatrix * vec4(light, 1));
+        glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(tempLight));
 
         glUseProgram(gridProg);
         glUniformMatrix4fv(gridModelMatrixLoc, 1, false, value_ptr(modelMatrix));
