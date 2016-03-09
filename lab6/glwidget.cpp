@@ -22,8 +22,11 @@ using glm::dot;
 using glm::rotate;
 using glm::value_ptr;
 using glm::lookAt;
+using std::cout;
+using std::endl;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) { 
+    light = vec3(0, 10, 0);
 }
 
 GLWidget::~GLWidget() {
@@ -276,8 +279,6 @@ void GLWidget::initializeGL() {
     glPrimitiveRestartIndex(restart);
     glEnable(GL_PRIMITIVE_RESTART);
 
-    light = vec3(0, 10, 0);
-
     initializeCube();
     initializeGrid();
 }
@@ -296,9 +297,9 @@ void GLWidget::resizeGL(int w, int h) {
     glUniformMatrix4fv(cubeProjMatrixLoc, 1, false, value_ptr(projMatrix));
     glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
     glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
+    vec3 tempLight = vec3(modelMatrix * vec4(light, 1));
+    glUniform3fv(cubeLightPosLoc, 1, value_ptr(tempLight));
 
-    vec3 tempLight = vec3(viewMatrix * modelMatrix * vec4(light, 1));
-    glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(tempLight));
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridProjMatrixLoc, 1, false, value_ptr(projMatrix));
@@ -409,9 +410,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
         glUseProgram(cubeProg);
         glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(modelMatrix));
-
-        vec3 tempLight = vec3(viewMatrix * modelMatrix * vec4(light, 1));
-        glUniformMatrix4fv(cubeLightPosLoc, 1, false, value_ptr(tempLight));
+        vec3 tempLight = vec3(modelMatrix * vec4(light, 1));
+        glUniform3fv(cubeLightPosLoc, 1, value_ptr(tempLight));
 
         glUseProgram(gridProg);
         glUniformMatrix4fv(gridModelMatrixLoc, 1, false, value_ptr(modelMatrix));
