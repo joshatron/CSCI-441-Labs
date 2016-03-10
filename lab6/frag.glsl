@@ -11,10 +11,10 @@ out vec4 color_out;
 void main() {
     vec3 normal = normalize(fnormal);
     vec3 l = normalize(lightPos - fposition);
-    float diffuse = 1. * max(0, dot(normal, l));
+    float diffuse = .8 * max(0, dot(normal, l));
     vec3 r = 2 * dot(normal, l) * normal - l;
     vec3 v = normalize(-1 * fposition);
-    float specular = .9 * max(0, pow(dot(r, v), 10));
+    float specular = .4 * pow(max(0, dot(v, r)), 200);
     float ambient = .1;
     color_out = vec4(fcolor * diffuse + fcolor * ambient + vec3(specular), 1);
 }
