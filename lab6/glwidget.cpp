@@ -26,7 +26,7 @@ using std::cout;
 using std::endl;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) { 
-    light = vec3(0, 10, 0);
+    light = vec3(0, -10, 0);
 }
 
 GLWidget::~GLWidget() {
