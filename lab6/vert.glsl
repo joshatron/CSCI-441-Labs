@@ -15,6 +15,6 @@ out vec3 fnormal;
 void main() {
   gl_Position = projection * view * model * vec4(position, 1);
   fcolor = color;
-  fnormal = vec3(transpose(inverse(model))*vec4(normal,1));
-  fposition = vec3(model * vec4(position, 1));
+  fnormal = vec3(transpose(inverse(view * model))*vec4(normal,1));
+  fposition = vec3(view * model * vec4(position, 1));
 }
