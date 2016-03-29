@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>frag.glsl</file>
+        <file>vert.glsl</file>
+        <file>grid_frag.glsl</file>
+        <file>grid_vert.glsl</file>
+        <file>models/bunny.obj</file>
+    </qresource>
+</RCC>
