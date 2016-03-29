@@ -69,7 +69,7 @@ position and normal buffers we  can see a dramatic difference in how the model r
 
 ## Recommended Reading
 
-[Phong shading](https://en.wikipedia.org/wiki/Phong_shading)
-[Smooth Shading Video](https://www.youtube.com/watch?v=PMgjVJogIbc)
-[glDrawElements](https://www.opengl.org/sdk/docs/man/html/glDrawElements.xhtml) - note that the indices pointer should just 
+* [Phong shading](https://en.wikipedia.org/wiki/Phong_shading)
+* [Smooth Shading Video](https://www.youtube.com/watch?v=PMgjVJogIbc)
+* [glDrawElements](https://www.opengl.org/sdk/docs/man/html/glDrawElements.xhtml) - note that the indices pointer should just 
 be a memory offset from the beginning of your indices VBO.
