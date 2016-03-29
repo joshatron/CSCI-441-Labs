@@ -345,7 +345,7 @@ void GLWidget::initializeModel(const char* filename) {
     glUniform3f(modelLightColorLoc, 1,1,1);
     glUniform1f(modelLightIntensityLoc, 1);
 
-    glUniform3f(modelAmbientColorLoc, 0, 0, .2);
+    glUniform3f(modelAmbientColorLoc, 0, 0.5, 0.2);
     glUniform3f(modelDiffuseColorLoc, .25, .8, 1);
 }
 
