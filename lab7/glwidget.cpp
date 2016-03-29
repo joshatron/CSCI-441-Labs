@@ -24,6 +24,7 @@ using glm::lookAt;
 using namespace std;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent), viewDist(-120) { 
+    smooth = false;
 }
 
 GLWidget::~GLWidget() {
@@ -247,9 +248,6 @@ void GLWidget::initializeModel(const char* filename) {
         cerr << err << endl;
         exit(1);
     }
-
-    cout << "# of shapes: " << shapes.size() << endl;
-    cout << "# of materials: " << materials.size() << endl;
 
     vector<vec3> flat_positions;
     vector<vec3> flat_normals;
