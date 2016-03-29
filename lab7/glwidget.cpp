@@ -148,6 +148,8 @@ void GLWidget::initializeFlatModel(const tinyobj::shape_t &shape,
         normals.push_back(n);
         normals.push_back(n);
     }
+
+    cout << positions.size() << endl;
 }
 
 void GLWidget::initializeSmoothModel(const tinyobj::shape_t &shape,
@@ -183,7 +185,16 @@ void GLWidget::initializeSmoothModel(const tinyobj::shape_t &shape,
     // copying over the index array from shape.mesh.indices to your own indices array.
 
     // Part 2e - Loop over every vertex normal and normalize it. Your normals are now
-    // smoothed. 
+    // smoothed.
+
+    for (size_t size = 0; size < shape.mesh.positions.size() / 3; size++) {
+        vec3 p0 = vec3(shape.mesh.positions[3*size+0],
+                       shape.mesh.positions[3*size+1],
+                       shape.mesh.positions[3*size+2]);
+
+        positions.push_back(p0);
+        normals.push_back(vec3(0,0,0));
+    }
 
     for(size_t tri = 0; tri < shape.mesh.indices.size() / 3; tri++) {
         // Here we're getting the indices for the current triangle
@@ -205,22 +216,23 @@ void GLWidget::initializeSmoothModel(const tinyobj::shape_t &shape,
                        shape.mesh.positions[3*ind2+2]);
 
         // Part 1 - TODO Calculate the normal of the triangle
-        vec3 n;
+        vec3  n = normalize(cross(p1 - p0, p2 - p0));
 
-        // Push the points onto our position array
-        positions.push_back(p0);
-        positions.push_back(p1);
-        positions.push_back(p2);
+        normals[ind0] += n;
+        normals[ind1] += n;
+        normals[ind2] += n;
 
-        // Push the normal onto our normal array (once for each point)
-        normals.push_back(n);
-        normals.push_back(n);
-        normals.push_back(n);
-
-        indices.push_back(3*tri+0);
-        indices.push_back(3*tri+1);
-        indices.push_back(3*tri+2);
+        indices.push_back(ind0);
+        indices.push_back(ind1);
+        indices.push_back(ind2);
     }
+
+    for (size_t tri = 0; tri < normals.size(); tri++) {
+        normals[tri] = normalize(normals[tri]);
+    }
+
+    cout << (shape.mesh.positions.size() / 3) << endl;
+    cout << positions.size() << endl;
 }
 
 // Initialize all the necessary OpenGL state to be able
@@ -343,7 +355,7 @@ void GLWidget::initializeModel(const char* filename) {
     glUniform3f(modelLightPosLoc, 0,100,0);
     glUniform3f(modelLightColorLoc, 1,1,1);
     glUniform1f(modelLightIntensityLoc, 1);
-    
+
     glUniform3f(modelAmbientColorLoc, 0, 0.5, 0.2);
     glUniform3f(modelDiffuseColorLoc, .25, .8, 1);
 }
