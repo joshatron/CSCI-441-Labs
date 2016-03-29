@@ -136,7 +136,8 @@ void GLWidget::initializeFlatModel(const tinyobj::shape_t &shape,
                        shape.mesh.positions[3*ind2+2]);
 
         // Part 1 - TODO Calculate the normal of the triangle
-        vec3 n;
+        vec3 n = normalize(cross(p1 - p0, p2 - p0));
+        cout << n.x << ", " << n.y << ", " << n.z << endl;
 
         // Push the points onto our position array
         positions.push_back(p0);
