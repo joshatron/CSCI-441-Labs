@@ -137,7 +137,6 @@ void GLWidget::initializeFlatModel(const tinyobj::shape_t &shape,
 
         // Part 1 - TODO Calculate the normal of the triangle
         vec3 n = normalize(cross(p1 - p0, p2 - p0));
-        cout << n.x << ", " << n.y << ", " << n.z << endl;
 
         // Push the points onto our position array
         positions.push_back(p0);
@@ -345,7 +344,7 @@ void GLWidget::initializeModel(const char* filename) {
     glUniform3f(modelLightColorLoc, 1,1,1);
     glUniform1f(modelLightIntensityLoc, 1);
 
-    glUniform3f(modelAmbientColorLoc, 0, 0, .2);
+    glUniform3f(modelAmbientColorLoc, 1, 1, 1);
     glUniform3f(modelDiffuseColorLoc, .25, .8, 1);
 }
 
