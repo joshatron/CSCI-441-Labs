@@ -102,3 +102,19 @@ Now all you need to do is use QOpenGLTexture's bind() method or bind(uint) to be
     tex.bind(1); // binds the texture to GL_TEXTURE1
     tex.bind(2); // binds the texture to GL_TEXTURE2
 
+
+## Things to notice
+
+Try scaling multiplying your uv coordinates by 2. Notice how the faces of the cube change. The glTexParameter calls determine how your texture is sampled. 
+In this case, we’ve set the wrap behavior of our texture to GL_CLAMP_TO_EDGE. Because we scaled our texture up by 2, a portion of the face is clamped to the 
+color at the edge of our texture. Other settings can tell OpenGL to repeat the texture pattern or to mirror it. 
+
+We’ve also set how OpenGL should select a color when the number of pixels in the texture don’t match up exactly with the pixels on the face of the cube. 
+We’ve told OpenGL to just pick the nearest color, but you can also tell OpenGL to interpolate the nearest pixels to get a more antialiased look. Experiment 
+with the different settings you can pass to glTexParameter. 
+
+## Recommended Reading
+
+* OpenGL Programming Guide, Eightth Edition, Chapter 6
+* [Texture Mapping - Wikipedia](http://en.wikipedia.org/wiki/Texture_mapping)
+
