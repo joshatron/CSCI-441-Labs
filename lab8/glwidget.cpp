@@ -23,7 +23,7 @@ using glm::value_ptr;
 using glm::lookAt;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
-    textureData = GLuint[textureWidth * textureHeight];
+    textureData = new GLuint[textureWidth * textureHeight];
 }
 
 GLWidget::~GLWidget() {
