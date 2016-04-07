@@ -7,8 +7,9 @@
 // Part 2 e - Add a uniform sampler2D variable for you texture. Sample the texture using the texture function (vec4 color = texture(<tex variable>, <uv coordinate>)).
 
 in vec3 fcolor;
+in vec2 uv;
 out vec4 color_out;
 
 void main() {
-  color_out = vec4(fcolor, 1);
+  color_out = vec4(uv.x, uv.y, 0, 1);
 }
