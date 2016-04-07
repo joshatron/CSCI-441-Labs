@@ -38,7 +38,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint cubeViewMatrixLoc;
         GLint cubeModelMatrixLoc;
 
-        GLuint textureData[];
+        GLuint textureData[100];
 
         void initializeGrid();
         void renderGrid();

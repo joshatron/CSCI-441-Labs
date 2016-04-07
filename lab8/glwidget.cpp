@@ -23,7 +23,6 @@ using glm::value_ptr;
 using glm::lookAt;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
-    textureData = new GLuint[textureWidth * textureHeight];
 }
 
 GLWidget::~GLWidget() {
@@ -92,12 +91,15 @@ void GLWidget::initializeCube() {
     for (int i = 0; i < textureWidth; i++) {
         for (int j = 0; j < textureHeight; j++) {
             if (i % 2 == j % 2) {
-                textureData[i+j*textureHeight] = 0x00000000;
+                textureData[i+j*textureHeight] = 0xFF000000;
             } else {
                 textureData[i+j*textureHeight] = 0xFFFFFFFF;
             }
         }
     }
+
+    GLuint uvBuffer;
+    glGenBuffers(1, &uvBuffer);
 
     // Part 1 - Create a texture coordinates buffer and populate it with data. This is just like any other vertex attribute
     // that you've created so far such as color, or normals except a texture coordinate is a 2 element vector (glm::vec2).
@@ -144,6 +146,38 @@ void GLWidget::initializeCube() {
     for(int i = 0; i < 24; i++) {
         pts[i] *= .5;
     }
+
+    vec2 uvs[] = {
+        vec2(0,0),
+        vec2(0,1),
+        vec2(1,1),
+        vec2(1,0),
+
+        vec2(0,0),
+        vec2(0,1),
+        vec2(1,1),
+        vec2(1,0),
+
+        vec2(1,0),
+        vec2(0,0),
+        vec2(0,1),
+        vec2(1,1),
+
+        vec2(1,1),
+        vec2(1,0),
+        vec2(0,0),
+        vec2(0,1),
+
+        vec2(0,1),
+        vec2(1,1),
+        vec2(1,0),
+        vec2(0,0),
+
+        vec2(1,1),
+        vec2(1,0),
+        vec2(0,0),
+        vec2(0,1),
+    };
 
     vec3 colors[] = {
         // top
@@ -212,6 +246,9 @@ void GLWidget::initializeCube() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+    glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uvs), uvs, GL_STATIC_DRAW);
+
     // Load our vertex and fragment shaders into a program object
     // on the GPU
     GLuint program = loadShaders(":/vert.glsl", ":/frag.glsl");
@@ -231,6 +268,11 @@ void GLWidget::initializeCube() {
     GLint colorIndex = glGetAttribLocation(program, "color");
     glEnableVertexAttribArray(colorIndex);
     glVertexAttribPointer(colorIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+    GLint uvIndex = glGetAttribLocation(program, "uvIn");
+    glEnableVertexAttribArray(uvIndex);
+    glVertexAttribPointer(uvIndex, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     cubeProjMatrixLoc = glGetUniformLocation(program, "projection");
     cubeViewMatrixLoc = glGetUniformLocation(program, "view");

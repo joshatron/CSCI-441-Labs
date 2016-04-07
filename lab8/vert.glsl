@@ -9,9 +9,12 @@ uniform mat4 model;
 
 in vec3 position;
 in vec3 color;
+in vec2 uvIn;
 out vec3 fcolor;
+out vec2 uv;
 
 void main() {
   gl_Position = projection * view * model * vec4(position, 1);
   fcolor = color;
+  uv = uvIn;
 }
