@@ -21,6 +21,8 @@ using glm::dot;
 using glm::rotate;
 using glm::value_ptr;
 using glm::lookAt;
+using std::cout;
+using std::endl;
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
 }
@@ -84,19 +86,6 @@ void GLWidget::initializeCube() {
 
     GLuint indexBuffer;
     glGenBuffers(1, &indexBuffer);
-
-    //cubeTexture
-    glGenTextures(1, &cubeTexture);
-
-    for (int i = 0; i < textureWidth; i++) {
-        for (int j = 0; j < textureHeight; j++) {
-            if (i % 2 == j % 2) {
-                textureData[i+j*textureHeight] = 0xFF000000;
-            } else {
-                textureData[i+j*textureHeight] = 0xFFFFFFFF;
-            }
-        }
-    }
 
     GLuint uvBuffer;
     glGenBuffers(1, &uvBuffer);
@@ -228,13 +217,6 @@ void GLWidget::initializeCube() {
         20,21,22,23
     };
 
-    // texture stuff
-    glBindTexture(GL_TEXTURE_2D, cubeTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, textureData);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
     // Upload the position data to the GPU, storing
     // it in the buffer we just allocated.
     glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
@@ -291,6 +273,31 @@ void GLWidget::initializeGL() {
     glEnable(GL_PRIMITIVE_RESTART);
 
     // Part 2 a-d 
+    //cubeTexture
+    glGenTextures(1, &cubeTexture);
+
+    const int textureWidth = 10;
+    const int textureHeight = 10;
+
+    GLuint textureData[100];
+
+    for (int i = 0; i < textureWidth; i++) {
+        for (int j = 0; j < textureHeight; j++) {
+            if (i % 2 == j % 2) {
+                textureData[i+j*textureHeight] = 0xFF000000;
+            } else {
+                textureData[i+j*textureHeight] = 0xFFFFFFFF;
+            }
+        }
+    }
+
+    // texture stuff
+    glBindTexture(GL_TEXTURE_2D, cubeTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, textureData);
+
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     initializeCube();
     initializeGrid();
@@ -326,6 +333,8 @@ void GLWidget::paintGL() {
 
 void GLWidget::renderCube() {
     glUseProgram(cubeProg);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, cubeTexture);
     glBindVertexArray(cubeVao);
     glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
 }

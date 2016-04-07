@@ -38,8 +38,6 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         GLint cubeViewMatrixLoc;
         GLint cubeModelMatrixLoc;
 
-        GLuint textureData[100];
-
         void initializeGrid();
         void renderGrid();
 
@@ -55,9 +53,6 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         int width;
         int height;
-
-        const int textureWidth = 10;
-        const int textureHeight = 10;
 
         glm::vec3 lastVPt;
         glm::vec3 pointOnVirtualTrackball(const glm::vec2 &pt);
