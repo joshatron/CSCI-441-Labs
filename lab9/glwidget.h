@@ -61,6 +61,10 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
         // Part 1 - Add two mat4 variables for pitch and yaw.
         // Also add two float variables for the pitch and yaw angles.
+        mat4 pitch;
+        mat4 yaw;
+        double pitchAngle;
+        double yawAngle;
 
         // Part 2 - Add a QTimer variable for our render loop.
 

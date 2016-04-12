@@ -504,6 +504,21 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
     // Part 1 - use d.x and d.y to modify your pitch and yaw angles
     // before constructing pitch and yaw rotation matrices with them
+    pitchAngle -= d.x * .01;
+    yawAngle -= d.y * .01;
+    
+    pitch = rotate(mat4(1.f), (float)pitchAngle, vec3(0,1,0));
+    yaw = rotate(mat4(1.f), (float)yawAngle, vec3(1,0,0));
+
+    viewMatrix = inverse(pitch * yaw);
+
+    glUseProgram(cubeProg);
+    glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
+
+    glUseProgram(gridProg);
+    glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
 
     lastPt = pt;
+
+    update();
 }
