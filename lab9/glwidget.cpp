@@ -45,6 +45,41 @@ GLWidget::~GLWidget() {
 
 
 void GLWidget::animate() {
+
+    velocity = vec3(0,0,0);
+    if (forward) {
+        velocity.z -= 1;
+    }
+    if (back) {
+        velocity.z += 1;
+    }
+    if (left) {
+        velocity.x -= 1;
+    }
+    if (right) {
+        velocity.x += 1;
+    }
+
+    if (flyMode) {
+        velocity = vec3(pitch * yaw * glm::vec4(velocity, 1.0f));
+    } else {
+        velocity = vec3(pitch * glm::vec4(velocity, 1.0f));
+        std::cout << "not in fly" << std::endl;
+    }
+
+
+    position = position + velocity * (float) 0.016;
+
+    mat4 translateMatrix = glm::translate(mat4(1.0f), position);
+
+    viewMatrix = inverse(translateMatrix * pitch * yaw);
+
+    glUseProgram(cubeProg);
+    glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
+
+    glUseProgram(gridProg);
+    glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
+
     update();
 }
 
@@ -479,7 +514,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
             break;
         case Qt::Key_Tab:
             // toggle fly mode
-            flyMode = true;
+            flyMode = !flyMode;
             break;
         case Qt::Key_Shift:
             // down
@@ -510,7 +545,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent *event) {
             break;
         case Qt::Key_Tab:
             // toggle fly mode
-            flyMode = false;
+//            flyMode = false;
             break;
         case Qt::Key_Shift:
             // down
@@ -538,15 +573,5 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     pitch = rotate(mat4(1.f), (float)pitchAngle, vec3(0,1,0));
     yaw = rotate(mat4(1.f), (float)yawAngle, vec3(1,0,0));
 
-    viewMatrix = inverse(pitch * yaw);
-
-    glUseProgram(cubeProg);
-    glUniformMatrix4fv(cubeViewMatrixLoc, 1, false, value_ptr(viewMatrix));
-
-    glUseProgram(gridProg);
-    glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
-
     lastPt = pt;
-
-    update();
 }
