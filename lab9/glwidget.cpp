@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <QTextStream>
+#include <QTimer>
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -23,11 +24,28 @@ using glm::dot;
 using glm::rotate;
 using glm::value_ptr;
 using glm::lookAt;
+using std::cout;
+using std::endl;
 
-GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) { 
+GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
+
+    timer = new QTimer(this);
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
+    timer->start(16);
+
+    forward = false;
+    left = false;
+    right = false;
+    back = false;
+    flyMode = false;
 }
 
 GLWidget::~GLWidget() {
+}
+
+
+void GLWidget::animate() {
+    update();
 }
 
 void GLWidget::initializeGrid() {
@@ -445,18 +463,23 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     switch(event->key()) {
         case Qt::Key_W:
             // forward
+            forward = true;
             break;
         case Qt::Key_A:
             // left
+            left = true;
             break;
         case Qt::Key_S:
             // back
+            back = true;
             break;
         case Qt::Key_D:
             // right
+            right = true;
             break;
         case Qt::Key_Tab:
             // toggle fly mode
+            flyMode = true;
             break;
         case Qt::Key_Shift:
             // down
@@ -471,18 +494,23 @@ void GLWidget::keyReleaseEvent(QKeyEvent *event) {
     switch(event->key()) {
         case Qt::Key_W:
             // forward
+            forward = false;
             break;
         case Qt::Key_A:
             // left
+            left = false;
             break;
         case Qt::Key_S:
             // back
+            back = false;
             break;
         case Qt::Key_D:
             // right
+            right = false;
             break;
         case Qt::Key_Tab:
             // toggle fly mode
+            flyMode = false;
             break;
         case Qt::Key_Shift:
             // down

@@ -34,6 +34,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
     public slots:
     // Part 2 - add an animate slot
+        void animate();
 
     private:
         void initializeCube();
@@ -63,11 +64,21 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
         // Also add two float variables for the pitch and yaw angles.
 
         // Part 2 - Add a QTimer variable for our render loop.
+        QTimer *timer;
 
         // Part 3 - Add state variables for keeping track
         //          of which movement keys are being pressed
         //        - Add two vec3 variables for position and velocity.
         //        - Add a variable for toggling fly mode
+
+        bool forward;
+        bool left;
+        bool right;
+        bool back;
+        bool flyMode;
+
+        vec3 position;
+        vec3 velocity;
 
         int width;
         int height;
