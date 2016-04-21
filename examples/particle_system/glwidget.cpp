@@ -468,6 +468,9 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
+
+    glUseProgram(psProg);
+    glUniformMatrix4fv(psViewMatrixLoc, 1, false, value_ptr(viewMatrix));
 }
 
 void GLWidget::renderGrid() {
