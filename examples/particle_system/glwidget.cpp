@@ -441,9 +441,6 @@ void GLWidget::paintGL() {
     renderGrid();
     renderParticleSystem(&ps);
 
-    //renderCubeMipmap(glm::translate(mat4(1.0f), vec3(-1,0,0)));
-    //renderCubeNearestMipmap(glm::translate(mat4(1.0f), vec3(0,0,0)));
-    //renderCube(glm::translate(mat4(1.0f), vec3(1,0,0)));
 }
 
 void GLWidget::renderParticleSystem(ParticleSystem *ps) {
@@ -451,7 +448,7 @@ void GLWidget::renderParticleSystem(ParticleSystem *ps) {
     glBindVertexArray(psVao);
 
     glBindBuffer(GL_ARRAY_BUFFER, particleBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle)*ps->numParticles(), ps->data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle)*ps->numParticles(), ps->data(), GL_STREAM_DRAW);
 
     glDrawArrays(GL_POINTS, 0, ps->numParticles());
 }
@@ -471,30 +468,6 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
 
     glUseProgram(gridProg);
     glUniformMatrix4fv(gridViewMatrixLoc, 1, false, value_ptr(viewMatrix));
-}
-
-void GLWidget::renderCubeMipmap(mat4 transform) {
-    glUseProgram(cubeProg);
-    glBindVertexArray(cubeVao);
-    glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(transform));
-    texMipmap->bind();
-    glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
-}
-
-void GLWidget::renderCubeNearestMipmap(mat4 transform) {
-    glUseProgram(cubeProg);
-    glBindVertexArray(cubeVao);
-    glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(transform));
-    texNearestMipmap->bind();
-    glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
-}
-
-void GLWidget::renderCube(mat4 transform) {
-    glUseProgram(cubeProg);
-    glBindVertexArray(cubeVao);
-    glUniformMatrix4fv(cubeModelMatrixLoc, 1, false, value_ptr(transform));
-    texNoMipmap->bind();
-    glDrawElements(GL_TRIANGLE_FAN, 29, GL_UNSIGNED_INT, 0);
 }
 
 void GLWidget::renderGrid() {
