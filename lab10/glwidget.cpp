@@ -110,7 +110,8 @@ void GLWidget::animate() {
     // glm has a quaternion data structure called quat. It's constructor
     // can take a vec3 that represents Euler angles. Construct two quaternions
     // using the from and to euler angles.
-
+    quat q1 = quat(from);
+    quat q2 = quat(to);
 
     // Interpolate the two quaternions using glm::slerp. slerp stands for
     // spherical linear interpolation and is how quaternions can be animated
@@ -118,11 +119,13 @@ void GLWidget::animate() {
     // glm::slerp(glm::quat q1, glm::quat q2, float t)
     // where t is in the range 0-1 and returns a quaternion t percent
     // between q1 and q2
+    quat q3 = glm::slerp(q1, q2, t);
 
     // The last step is to convert the resulting quaternion into a matrix
     // for use in our fragment shader. Use glm::toMat4(glm::quat) to do so
     // and store the resulting matrix in quatSlerp. Again, quatSlerp is used
     // in paintGL to render our third cube.
+    quatSlerp = glm::toMat4(q3);
 
     update();
 }
