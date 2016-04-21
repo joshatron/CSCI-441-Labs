@@ -105,6 +105,8 @@ void GLWidget::animate() {
     // and store it in eulerLerp. eulerLerp is used in paintGL to render
     // another of the three cubes. Notice how the second cube is just being
     // rotated rather than scaled and skewed.
+    vec3 rotation = vec3((1-t)*from.x+t*to.x,(1-t)*from.y+t*to.y,(1-t)*from.z+t*to.z);
+    eulerLerp = rotate(mat4(1.f), rotation.z, vec3(0,0,1)) * rotate(mat4(1.f), rotation.y, vec3(0,1,0)) * rotate(mat4(1.f), rotation.x, vec3(1,0,0));
 
     // Part 3 - Quaternions are another way to represent orientation. 
     // glm has a quaternion data structure called quat. It's constructor
