@@ -88,10 +88,13 @@ void GLWidget::animate() {
     // Construct two matrices, one using 'from' and one using 'to'.
     // Make sure the order of rotations is rotZ*rotY*rotX to match up
     // with later parts.
+    mat4 fromMatrix = rotate(mat4(1.f), from.z, vec3(0,0,1)) * rotate(mat4(1.f), from.y, vec3(0,1,0)) * rotate(mat4(1.f), from.x, vec3(1,0,0));
+    mat4 toMatrix = rotate(mat4(1.f), to.z, vec3(0,0,1)) * rotate(mat4(1.f), to.y, vec3(0,1,0)) * rotate(mat4(1.f), to.x, vec3(1,0,0));
 
     // Then linearly interpolate the two matrices using variable 't',
     // storing the result in matrixLerp. See how matrixLerp is used
     // in paintGL. Compile and run the program to see how 
+    matrixLerp = (1 - t) * fromMatrix + t * toMatrix;
 
     // Part 2 - The next step is to linearly interpolate the two euler
     // angles prior to converting it to a matrix. Create a vec3 variable
